@@ -1,0 +1,28 @@
+.article { margin: 0 0 10px 0; }
+
+.page-header {
+	margin-top: 0;
+}
+
+.pic-top {
+	background-image: url('http://az616578.vo.msecnd.net/files/2016/07/27/636052435154552834-1508689237_1-jqpiys1tqk6DwAEfyGTZYA.jpeg');
+	background-repeat: no-repeat;
+	background-size: cover;
+	height: 300px;
+	margin-top: 20px;
+}
+
+footer {
+	background-color: transparent;
+	padding: 10px 0;
+}
+
+footer p {
+	margin: 0;
+	text-align: right;
+}
+
+.container-index h3,
+.container-index p {
+	text-align: center;
+}

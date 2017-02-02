@@ -34,7 +34,7 @@ if(isset($_POST['truncate']))
 		<link rel="stylesheet" href="../public/style.css">
 		<!-- TinyMCE -->
 		<script src="//cdn.tinymce.com/4/tinymce.min.js"></script>
-  		<script>tinymce.init({ selector:'textarea', plugins : 'advlist autolink link image lists charmap print preview' });</script>
+  		<script>tinymce.init({ selector:'textarea', plugins : 'advlist autolink link image lists charmap print preview autolink' });</script>
 		<title>Administration</title>
 	</head>
 

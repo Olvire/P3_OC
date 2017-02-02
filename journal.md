@@ -37,3 +37,20 @@ Pour cette première journée sur le P3, j'ai été très motivé. J'ai créé l
 >  - Enfin, la feuille de style (*public/style.css*) vient compléter celle du Twitter Bootstrap !
 
 Bref, encore beaucoup de choses à corriger et à améliorer. Si vous voyez ce journal et que vous souhaitez m'aider, n'hésitez pas à me contacter.
+
+*Mercredi 02/02/2017*
+
+Aujourd'hui, j'ai effectué quelques modifications de style, rien de plus. Je me suis surtout attelé à pousser les fichiers sur ce repository.
+
+**À faire :**
+
+ - Programmer au maximum en orienté objet
+	 - Un minimum de HTML !
+ - Respecter l'architecture MVC (pas simple !)
+	 - Organisation des dossiers !
+	 - Organisation des fichiers !
+ - Protéger la page d'administration par mot de passe
+	 - Créer un utilisateur admin en base de données ?
+ - Travailler sur l'édition des articles (*Comment faire ?*)
+ - Demander confirmation lors de la suppression (*TRUNCATE*) de tous les articles
+	 - JS ?

@@ -1,7 +1,7 @@
 Journal de bord
 =======
 
-*Mercredi 01/02/2017*
+#### *Mercredi 01/02/2017*
 
 Pour cette première journée sur le P3, j'ai été très motivé. J'ai créé les dossiers **/app**, **/pages** et **/public** pour faire la distinction entre les fichiers. Malheureusement, il semblerait que ça n'ait pas servi à grand chose.
 
@@ -38,7 +38,7 @@ Pour cette première journée sur le P3, j'ai été très motivé. J'ai créé l
 
 Bref, encore beaucoup de choses à corriger et à améliorer. Si vous voyez ce journal et que vous souhaitez m'aider, n'hésitez pas à me contacter.
 
-*Mercredi 02/02/2017*
+#### *Jeudi 02/02/2017*
 
 Aujourd'hui, j'ai effectué quelques modifications de style, rien de plus. Je me suis surtout attelé à pousser les fichiers sur ce repository.
 

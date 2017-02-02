@@ -1,9 +1,41 @@
 
-
 .article { margin: 0 0 10px 0; }
 
 .page-header {
 	margin-top: 0;
+}
+
+/* Admin page */
+.container-admin {
+	/*border: 1px solid #333;*/
+	margin-bottom: 30px;
+}
+
+footer {
+	background-color: #D8D8D8;
+	margin: 0 auto;
+	padding: 10px 0;
+}
+
+footer .container {
+	display: -webkit-flex;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+}
+
+/* use to space link and copyright in the footer */
+.nothing {
+	flex: 1;
+}
+
+footer p { margin: 0; }
+
+
+/* Index page */
+.container-index h3,
+.container-index p {
+	text-align: center;
 }
 
 .pic-top {
@@ -12,19 +44,4 @@
 	background-size: cover;
 	height: 300px;
 	margin-top: 20px;
-}
-
-footer {
-	background-color: transparent;
-	padding: 10px 0;
-}
-
-footer p {
-	margin: 0;
-	text-align: right;
-}
-
-.container-index h3,
-.container-index p {
-	text-align: center;
 }

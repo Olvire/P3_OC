@@ -31,10 +31,10 @@ if(isset($_POST['truncate']))
 	    <link rel="icon" href="../../favicon.ico">
 	    <!-- Start Twitter Bootstrap -->
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-		<link rel="stylesheet" href="../public/style.css">
+		<link rel="stylesheet" href="../public/style.css?<?php echo time(); ?>">
 		<!-- TinyMCE -->
 		<script src="//cdn.tinymce.com/4/tinymce.min.js"></script>
-  		<script>tinymce.init({ selector:'textarea', plugins : 'advlist autolink link image lists charmap print preview autolink' });</script>
+  		<script>tinymce.init({ selector:'textarea', plugins : 'advlist autolink link image lists charmap print preview' });</script>
 		<title>Administration</title>
 	</head>
 
@@ -54,7 +54,7 @@ if(isset($_POST['truncate']))
 	      </div>
 	    </nav>
 
-		<div class="container">
+		<div class="container container-admin">
 			<div class="page-header">
 				<h1>Administration</h1>
 				<p>Hello dear administrator,</p>
@@ -110,17 +110,18 @@ if(isset($_POST['truncate']))
 				}
 			}
 			?>
-			<h2>Admin</h2>
+			<h2>Dangerous zone</h2>
+			<p>The button herebelow will delete all the articles in the database.</p>
 			<form action="#" method="post">
 				<button type="submit" name="truncate" class="btn btn-danger btn-sm">DELETE ARTICLES</button>
 			</form><br>
-
-			<p><a href="../public/index.php">Accueil</a></p>
 		</div>
 
 		<footer>
 			<div class="container">
-				<p>&copy; Jérôme Butel | <?= date('Y'); ?></p>
+				<a href="../public/index.php">Vers l'accueil</a>
+				<span class="nothing"></span>
+				<span class="copyright">&copy; Jérôme Butel | <?= date('Y'); ?></span>
 			</div>
 		</footer>
 	</body>

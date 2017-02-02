@@ -43,7 +43,7 @@ $manager = new ArticleManager('blog_ecrivain');
 				}
 				?>
 
-			<a href="../pages/admin.php">Admin</a>
+			<a href="../pages/admin.php">Vers la page d'administration</a>
 		</div>
 	</body>
 </html>

@@ -61,6 +61,7 @@ class ArticleManager
 		$result = $this->db->query('SELECT * FROM articles ORDER BY id');
 		$listeArticles = $result->fetchAll(PDO::FETCH_CLASS, "Article");
 
+		// TODO : vérifier le bon fonctionnement (ne fonctionne pas, le 04/02/2017)
 		foreach($listeArticles as $article)
 		{
 			$article->set_date_post(new DateTime($article->get_date_post()));

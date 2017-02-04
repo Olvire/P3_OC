@@ -1,10 +1,14 @@
 <?php
+/**
+ * Class that model an article for the app.
+ */
 class Article
 {	
 	private $id;
 	private $title;
 	private $content;
 	private $author;
+	private $date_post;
 
 	/**
 	 * @param array $value The value taken by the constructor to fill the variables
@@ -84,6 +88,11 @@ class Article
 		}	
 	}
 
+	public function set_date_post(DateTime $date_post)
+	{
+		$this->date_post = $date_post;
+	}
+
 	/**
 	 * Gets the identifier.
 	 *
@@ -122,5 +131,15 @@ class Article
 	public function get_author()
 	{
 		return $this->author;
+	}
+
+	/**
+	 * Gets the date post.
+	 *
+	 * @return The date post.
+	 */
+	public function get_date_post()
+	{
+		return $this->date_post;
 	}
 }

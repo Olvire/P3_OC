@@ -54,3 +54,9 @@ Aujourd'hui, j'ai effectué quelques modifications de style, rien de plus. Je me
  - Travailler sur l'édition des articles (*Comment faire ?*)
  - Demander confirmation lors de la suppression (*TRUNCATE*) de tous les articles
 	 - JS ?
+
+#### Samedi 04/02/2017
+
+Une grosse tentative, aujourd'hui, de faire les modifications nécessaires pour respecter l'architecture MVC. Je me suis appuyé sur un exemple fourni par mon mentor pour lesdites modifications et espère avoir fait un pas vers la bonne direction. J'en appelle à mon mentor et à toutes les personnes pouvant apporter leurs bons conseils ! ;)
+
+Pour le dernier commit, j'ai tenté d'ajouter la date d'ajout du post (*$date_post*), mais sans succès. Cela reste à faire dans les prochaines mises à jour. 

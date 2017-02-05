@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -9,10 +8,29 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <link rel="icon" href="../../favicon.ico">
+    <?php if(isset($_GET['p']) AND $_GET['p'] === 'admin' OR isset($_GET['p']) AND $_GET['p'] === 'single')
+    {
+      ?> 
+      <script src="//cloud.tinymce.com/stable/tinymce.min.js"></script>
+      <script>tinymce.init({
+              selector: 'textarea',
+              height: 200,
+              menubar: false,
+              plugins: [
+                'advlist autolink lists link image charmap print preview anchor',
+                'searchreplace visualblocks code fullscreen',
+                'insertdatetime media table contextmenu paste code'
+              ],
+              toolbar: 'undo redo | insert | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image',
+              content_css: '//www.tinymce.com/css/codepen.min.css'
+            });</script>
+      <?php
+    }
+    ?>
 
     <title><?= $page_title; ?></title>
-	
-	<link rel="stylesheet" href="../public/style.css">
+	  <link rel="stylesheet" href="../public/css/font-awesome/css/font-awesome.min.css">
+	  <link rel="stylesheet" href="../public/css/style.css">
     <!-- Bootstrap core CSS -->
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
@@ -43,5 +61,8 @@
     </div><!-- /.container -->
 
     <?php include('../app/footer.php'); ?>
+
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+    <script src="../public/js/script.js"></script>
   </body>
 </html>

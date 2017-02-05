@@ -1,4 +1,5 @@
 <?php
+
 class AdminForm
 {
 	private $surround = 'form-group';

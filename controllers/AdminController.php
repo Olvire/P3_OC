@@ -4,7 +4,10 @@ class AdminController
 {
 	public function execute()
 	{
-		$viewAdmin = new ViewAdmin();
+		$articleManager = new ArticleManager('blog_ecrivain');
+		$listeArticles = $articleManager->get_articles();
+
+		$viewAdmin = new ViewAdmin($listeArticles); // Avoid the repetition? (AdminController & HomeController)
 		$viewAdmin->display();
 	}
 }

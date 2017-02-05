@@ -41,12 +41,12 @@ class ArticleManager
 	 * @param string  $content  The content
 	 * @param string  $author   The author
 	 */
-	public function add($title, $content, $author, $date_post)
+	public function add($title, $author, $content)
 	{
-		$request = $this->db->prepare('INSERT INTO articles(title, content, author, $date_post) VALUES(:title, :content, :author, NOW())');
+		$request = $this->db->prepare('INSERT INTO articles(title, content, author, date_post) VALUES(:title, :content, :author, NOW())');
 		$request->bindValue(':title', $title);
-		$request->bindValue(':content', $content);
 		$request->bindValue(':author', $author);
+		$request->bindValue(':content', $content);
 
 		$request->execute();
 	}
@@ -58,10 +58,9 @@ class ArticleManager
 	 */
 	public function get_articles() 
 	{
-		$result = $this->db->query('SELECT * FROM articles ORDER BY id');
+		$result = $this->db->query('SELECT * FROM articles ORDER BY date_post DESC');
 		$listeArticles = $result->fetchAll(PDO::FETCH_CLASS, "Article");
 
-		// TODO : vérifier le bon fonctionnement (ne fonctionne pas, le 04/02/2017)
 		foreach($listeArticles as $article)
 		{
 			$article->set_date_post(new DateTime($article->get_date_post()));
@@ -79,8 +78,15 @@ class ArticleManager
 	 */
 	public function get_article()
 	{
-		$result = $this->db->query('SELECT * FROM articles WHERE id = ' . $_GET['id'])->fetchAll(PDO::FETCH_CLASS, "Article");
-		return $result;
+		$request = $this->db->prepare('SELECT * FROM articles WHERE id = ' . $_GET['id']);
+		$request->execute();
+
+		$request->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, 'Article');
+		$article = $request->fetch();
+
+		$article->set_date_post(new DateTime($article->get_date_post()));
+
+		return $article;
 	}
 
 	/**

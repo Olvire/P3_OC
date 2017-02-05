@@ -1,4 +1,4 @@
 <?php
-    $controller = new IndexController();
+    $controller = new HomeController();
     $controller->execute();
 ?>

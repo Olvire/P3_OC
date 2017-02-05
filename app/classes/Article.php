@@ -36,6 +36,25 @@ class Article
 		}
 	}
 
+	public function get_article_header()
+	{
+		$article_header = '<h3><em>#' . $this->get_id() . '</em> - ' . htmlspecialchars($this->get_title()) . '</a></h3>';
+		$article_header .= '<p><small>Written by ' . htmlspecialchars($this->get_author()) . ' - ' . $this->get_date_post()->format('d/m/Y, H:h:i') . '</small></p>';
+		return $article_header;
+	}
+
+	public function get_extract()
+	{
+		$html = '<p>' . substr($this->content, 0, 300) . '...</p>';
+		$html .= '<p><a href="'. $this->get_url() .'">Voir la suite</a></p>';
+		return $html;
+	}
+
+	public function get_url()
+	{
+		return 'index.php?p=single&id=' . $this->id;
+	}
+
 	/**
 	 * Sets the identifier.
 	 *

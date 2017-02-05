@@ -1,0 +1,148 @@
+* {
+	box-sizing: border-box; 
+}
+
+body {
+	display: flex;
+	display: -webkit-flex;
+	flex-direction: column;
+	min-height: 100vh; 
+}
+
+/* Common */
+.admin-articles h3 a,
+.article h3 a {
+	color: #333; 
+}
+
+/* Single */
+.single-article {
+	border: 1px solid #d8d8d8;
+	padding: 10px; 
+}
+
+.single-article h3 {
+	background-color: #f8f8f8;
+	margin-top: 0;
+	padding: 10px; 
+}
+
+.comments-container {
+	border: 1px solid #d8d8d8;
+	padding: 10px;
+	text-align: right;
+}
+
+.comments {
+	display: none;
+}
+
+.leave-comment-link {
+	color: #333;
+}
+
+/* Home */
+.home-pic-top {
+	background-image: url('http://az616578.vo.msecnd.net/files/2016/07/27/636052435154552834-1508689237_1-jqpiys1tqk6DwAEfyGTZYA.jpeg');
+	background-repeat: no-repeat;
+	background-size: cover;
+	height: 300px;
+	margin-bottom: 30px; 
+}
+
+.article-content {
+	padding: 0 10px; 
+}
+
+.page-container { flex: 1; }
+
+.article {
+	margin: 50px 0;
+}
+
+.page-header {
+	margin-top: 0; 
+}
+
+.home-hr {
+	padding: 0;
+	border: none;
+	border-top: medium double #333;
+	color: #333;
+	text-align: center;
+}
+
+.home-hr:after {
+	content: "§";
+	display: inline-block;
+	position: relative;
+	top: -0.7em;
+	font-size: 1.5em;
+	padding: 0 0.25em;
+	background: white;
+}
+
+/* Admin */
+.admin-pic-top {
+	background-image: url('http://www.cilsf.org/wp-content/uploads/2016/06/writers.jpg');
+	background-repeat: no-repeat;
+	background-position: center bottom;
+	background-size: cover;
+	height: 300px;
+	margin-bottom: 30px;
+}
+
+#admin-1,
+#admin-2,
+#admin-3 {
+	cursor: pointer;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	margin: 0;
+	padding: 10px 0;
+}
+
+#admin-1:hover,
+#admin-2:hover,
+#admin-3:hover {
+	background-color: #f8f8f8;
+	color: #3384C8;
+}
+
+.arrow {
+	margin-top: 25px;
+}
+
+.admin-new-article, 
+.admin-articles,
+.admin-danger-zone {
+	margin: 30px 0;
+}
+
+.edit {
+	margin-right: 5px; 
+}
+
+/* Footer */
+footer {
+	background-color: #F8F8F8;
+	border-top: 1px solid #E7E7E7;
+	margin-top: 60px;
+	padding: 10px 0; 
+}
+
+footer p { margin: 0; 
+}
+
+footer .container {
+	display: flex;
+	display: -webkit-flex;
+	flex-direction: row;
+	justify-content: space-between; 
+}
+
+.nothing { 
+	content: "";
+	flex: 1; 
+}

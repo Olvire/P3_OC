@@ -4,9 +4,6 @@
  */
 class SingleController
 {	
-	/**
-	 * Execute the article manager to get an unique article, then gives it to the view to display
-	 */
 	public function execute()
 	{
 		$articleManager = new ArticleManager('blog_ecrivain');

@@ -21,12 +21,18 @@ class ViewSingle
 	 */
 	public function display()
 	{
-		foreach($this->articleUnique as $article)
-		{
+		if(empty($this->articleUnique)) {
+			echo 'Hey, there\'s nothing here';
+		} else {
 			echo '<div class="single-article">';
-			echo '<h3><em>#' . $article->get_id() . '</em>' . htmlspecialchars($article->get_title()) . '<br><small>Written by '. htmlspecialchars($article->get_author()) .'</small></h3>';
-			echo '<p class="article-content">'. htmlspecialchars($article->get_content()) .'</p>';
-			// echo '<div class="comments">'. $article->get_comments() .'</div>';
+			echo $this->articleUnique->get_article_header();
+			echo '<p class="article-content">'. $this->articleUnique->get_content() .'</p>';
+			echo '<div class="comments-container">';
+			echo '<strong>Commentaires </strong>(0)</div>'; // TODO
+			echo '<div class="comments">';
+			echo '<a class="leave-comment-link" "href="#">Leave a comment</a>'; // TODO
+			echo '<hr>';
+			echo '</div>';
 			echo '</div><br>';
 			echo '<p><a href=".">Go to index</a></p>';
 		}

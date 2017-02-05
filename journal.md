@@ -59,4 +59,37 @@ Aujourd'hui, j'ai effectué quelques modifications de style, rien de plus. Je me
 
 Une grosse tentative, aujourd'hui, de faire les modifications nécessaires pour respecter l'architecture MVC. Je me suis appuyé sur un exemple fourni par mon mentor pour lesdites modifications et espère avoir fait un pas vers la bonne direction. J'en appelle à mon mentor et à toutes les personnes pouvant apporter leurs bons conseils ! ;)
 
-Pour le dernier commit, j'ai tenté d'ajouter la date d'ajout du post (*$date_post*), mais sans succès. Cela reste à faire dans les prochaines mises à jour. 
+Pour le dernier commit, j'ai tenté d'ajouter la date d'ajout du post (*$date_post*), mais sans succès. Cela reste à faire dans les prochaines mises à jour.
+
+#### Dimanche 05/02/2017
+
+Tout a été manipulé aujourd'hui : classes, vues, contrôleurs, modèles, pages ainsi que la partie publique.
+
+**La page '*home*'**
+Ajout d'une image décorative (ajoutée en background pour ne pas gêner l'accessibilité), au-dessus de la liste des articles présents en base de données. Ajout d'un `<hr>` personnalisé.
+
+**La partie "*admin*"**
+Une image décorative (elle aussi en background) a été ajoutée. Le formulaire (avec un `textarea` géré par *TinyMCE*), la liste des articles ainsi que la zone dangereuse peuvent désormais être désactivés et réactivés grâce à `jQuery`.
+
+**La *single page*** 
+Elle s'est vue agrémentée d'un design amélioré. Les articles apparaissent désormais dans un cadre, le contenu espacé un peu à l'intérieur (*padding*).
+
+La prochaine étape du développement a été amorcée, à savoir l'espace de commentaires. Il n'est pas encore fonctionnel. En vue d'effectuer des tests d'affichage, un clic sur le mot "Commentaires" active une zone où seront prochainement affichés lesdits commentaires.
+
+**Côté code**
+*Les ajouts et autres modifications*
+
+ > - Ajout des méthodes `get_articles_header()`, `get_extract` et `get_url()` dans la classe `Article`, toujours dans l'optique de respecter un peu plus l'architecture MVC.
+ > - Les classes `ViewAdmin`, `ViewHome` et `ViewSingle` ont été étoffées. Hélas, beaucoup (trop) de `echo` là-dedans (surtout dans la classe `ViewAdmin`). **Cela peut sûrement être amélioré. Comment ?**
+ > Ajout du CDN `jQuery` et création d'un fichier `script.js` pour la gestion des évènements.
+ > Prise en considération de la page demandée pour l'affichage (ou non) du script concernant TinyMCE. S'il s'agit de la page '*admin*' ou '*single*', le script existe. En effet, il sera à l'avenir nécessaire pour les commentaires laissés sur les articles (uniquement (pour le moment) sur la page 'single').
+
+*Les suppressions*
+
+> - Suppression de la page `homeHeader.php`
+
+*Les doutes*
+
+> - Léger doute en ce qui concerne les contrôleurs. En effet, `HomeController`, `SingleController` et `AdminController` font tous trois appel au modèle `ArticleManager`, qui s'occupe de la connexion à la base de données. **N'y a-t-il pas plus efficace ?**
+> -  Le modèle `ArticleManager` permet maintenant d'obtenir la date du post d'un article. **Cependant, la façon de faire est-elle la bonne ?**
+> - La page `index.php` DOIT être amélioré. Mais comment ? Et surtout, les contrôles (`isset`) pour la publication, l'édition et la suppression d'articles sont-ils à leur place ?

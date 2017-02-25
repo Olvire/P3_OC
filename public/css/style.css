@@ -1,74 +1,95 @@
+@font-face {
+  font-family: "Roboto";
+  src: local(Roboto Thin), url("../fonts/roboto/Roboto-Thin.eot");
+  src: url("../fonts/roboto/Roboto-Thin.eot?#iefix") format("embedded-opentype"), url("../fonts/roboto/Roboto-Thin.woff2") format("woff2"), url("../fonts/roboto/Roboto-Thin.woff") format("woff"), url("../fonts/roboto/Roboto-Thin.ttf") format("truetype");
+  font-weight: 200;
+}
+
+@font-face {
+  font-family: "Roboto";
+  src: local(Roboto Light), url("../fonts/roboto/Roboto-Light.eot");
+  src: url("../fonts/roboto/Roboto-Light.eot?#iefix") format("embedded-opentype"), url("../fonts/roboto/Roboto-Light.woff2") format("woff2"), url("../fonts/roboto/Roboto-Light.woff") format("woff"), url("../fonts/roboto/Roboto-Light.ttf") format("truetype");
+  font-weight: 300;
+}
+
+@font-face {
+  font-family: "Roboto";
+  src: local(Roboto Regular), url("../fonts/roboto/Roboto-Regular.eot");
+  src: url("../fonts/roboto/Roboto-Regular.eot?#iefix") format("embedded-opentype"), url("../fonts/roboto/Roboto-Regular.woff2") format("woff2"), url("../fonts/roboto/Roboto-Regular.woff") format("woff"), url("../fonts/roboto/Roboto-Regular.ttf") format("truetype");
+  font-weight: 400;
+}
+
+@font-face {
+  font-family: "Roboto";
+  src: url("../fonts/roboto/Roboto-Medium.eot");
+  src: url("../fonts/roboto/Roboto-Medium.eot?#iefix") format("embedded-opentype"), url("../fonts/roboto/Roboto-Medium.woff2") format("woff2"), url("../fonts/roboto/Roboto-Medium.woff") format("woff"), url("../fonts/roboto/Roboto-Medium.ttf") format("truetype");
+  font-weight: 500;
+}
+
+@font-face {
+  font-family: "Roboto";
+  src: url("../fonts/roboto/Roboto-Bold.eot");
+  src: url("../fonts/roboto/Roboto-Bold.eot?#iefix") format("embedded-opentype"), url("../fonts/roboto/Roboto-Bold.woff2") format("woff2"), url("../fonts/roboto/Roboto-Bold.woff") format("woff"), url("../fonts/roboto/Roboto-Bold.ttf") format("truetype");
+  font-weight: 700;
+}
+
+@import url('https://fonts.googleapis.com/css?family=Dancing+Script');
+
+.row { margin: 0!important; }
+
 * {
-	box-sizing: border-box; 
+	box-sizing: border-box;
 }
 
 body {
 	display: flex;
 	display: -webkit-flex;
 	flex-direction: column;
-	min-height: 100vh; 
+	min-height: 100vh;
+	padding-top: 70px;
 }
 
-/* Common */
-.admin-articles h3 a,
-.article h3 a {
-	color: #333; 
+.admin-container,
+.home-container,
+.single-container,
+.error-container,
+.about-container {
+	flex: 1 1 0;
 }
 
-/* Single */
-.single-article {
-	border: 1px solid #d8d8d8;
-	padding: 10px; 
-}
+.navbar { margin-bottom: 0!important; }
 
-.single-article h3 {
-	background-color: #f8f8f8;
-	margin-top: 0;
-	padding: 10px; 
-}
+/* /!\ Admin Page /!\ */
+.admin-nav { margin-bottom: 40px!important; }
 
-.comments-container {
-	border: 1px solid #d8d8d8;
+
+.articles-nb,
+.comments-nb,
+.users-nb {
+	color: #fff;
+	text-align: center;
 	padding: 10px;
-	text-align: right;
 }
 
-.comments {
-	display: none;
+.articles-nb h2,
+.comments-nb h2,
+.users-nb h2 {
+	font-weight: lighter;
+	margin: 0;
 }
 
-.leave-comment-link {
-	color: #333;
-}
+.articles-nb { background-color: #4cb051; }
+.comments-nb { background-color: #3c95f5; }
+.users-nb { background-color: #f24436; }
 
-/* Home */
-.home-pic-top {
-	background-image: url('http://az616578.vo.msecnd.net/files/2016/07/27/636052435154552834-1508689237_1-jqpiys1tqk6DwAEfyGTZYA.jpeg');
-	background-repeat: no-repeat;
-	background-size: cover;
-	height: 300px;
-	margin-bottom: 30px; 
-}
+.edit-delete-buttons { margin: 5px 0; }
+.dashboard-items-content { padding: 10px; }
 
-.article-content {
-	padding: 0 10px; 
-}
-
-.page-container { flex: 1; }
-
-.article {
-	margin: 50px 0;
-}
-
-.page-header {
-	margin-top: 0; 
-}
+/* Home Page */
+.home-article { margin: 20px 0; }
 
 .home-hr {
-	padding: 0;
-	border: none;
-	border-top: medium double #333;
-	color: #333;
+	border-top: 1px solid #8c8b8b;
 	text-align: center;
 }
 
@@ -76,73 +97,109 @@ body {
 	content: "§";
 	display: inline-block;
 	position: relative;
-	top: -0.7em;
-	font-size: 1.5em;
-	padding: 0 0.25em;
-	background: white;
+	top: -14px;
+	padding: 0 10px;
+	background: #f0f0f0;
+	color: #8c8b8b;
+	font-size: 18px;
+	-webkit-transform: rotate(60deg);
+	-moz-transform: rotate(60deg);
+	transform: rotate(60deg);
 }
 
-/* Admin */
-.admin-pic-top {
-	background-image: url('http://www.cilsf.org/wp-content/uploads/2016/06/writers.jpg');
-	background-repeat: no-repeat;
-	background-position: center bottom;
-	background-size: cover;
-	height: 300px;
-	margin-bottom: 30px;
-}
+.home-article h2 { margin: 0 0 15px 0; }
+.home-article-content { margin: 0 0 15px 0; }
 
-#admin-1,
-#admin-2,
-#admin-3 {
-	cursor: pointer;
-	display: flex;
-	flex-direction: row;
-	justify-content: space-between;
+.home-article-content p {
 	margin: 0;
-	padding: 10px 0;
+	padding: 5px 0;
 }
 
-#admin-1:hover,
-#admin-2:hover,
-#admin-3:hover {
-	background-color: #f8f8f8;
-	color: #3384C8;
+/* Single Page */
+
+.single-container aside h5 {
+	margin: 5px 0;
 }
 
-.arrow {
-	margin-top: 25px;
+.article-unique-header {
+	border-radius: 10px;
+	padding: 0 0 20px 0;
 }
 
-.admin-new-article, 
-.admin-articles,
-.admin-danger-zone {
-	margin: 30px 0;
+.article-unique-header h1 {
+	font-size: 4vw;
 }
 
-.edit {
-	margin-right: 5px; 
+@media (max-width: 768px) {
+	.article-unique-header h1 {
+		font-size: 10vw;
+	}
 }
+
+.article-unique-header a { margin: 15px 0 0 0; }
+.article-content { padding: 10px 0px; }
+
+#comment {
+	background-color: #f4f4f4;
+	border: 1px solid #d8d8d8;
+	border-radius: 10px;
+	margin-bottom: 10px;
+	padding: 10px;
+}
+
+.write-comment { padding: 20px 0; }
+#commentaire-repondre { text-decoration: underline; }
+#commentaire-repondre:hover { cursor: pointer; }
+.reponse-commentaire-form { display: none; }
+
+/* About Page */
+
 
 /* Footer */
 footer {
-	background-color: #F8F8F8;
-	border-top: 1px solid #E7E7E7;
-	margin-top: 60px;
-	padding: 10px 0; 
-}
-
-footer p { margin: 0; 
+	background-color: #f8f8f8;
+	border-top: 1px solid #d8d8d8;
+	margin-top: 35px;
+	padding: 10px 0;
 }
 
 footer .container {
 	display: flex;
 	display: -webkit-flex;
 	flex-direction: row;
-	justify-content: space-between; 
+	align-items: center;
 }
 
-.nothing { 
-	content: "";
-	flex: 1; 
+footer .container p { margin: 0; }
+
+.nothing {
+	content="";
+	flex: 1;
+}
+
+
+/* Error Page */
+.error-container { text-align: center; }
+
+.not-found-header {
+	margin: 0 0 20px 0;
+	padding: 20px;
+}
+
+.not-found-header h1 {
+	font-family: 'Dancing Script', cursive;
+	font-size: 5em;
+	font-size: 9vw;
+	margin: 0;
+}
+
+.not-found-content {
+	padding: 20px;
+	text-align: justify;
+}
+
+.not-found-content p {
+	line-height: 1.8em;
+	font-size: 1.1em;
+	font-style: italic;
 }

@@ -93,3 +93,46 @@ La prochaine étape du développement a été amorcée, à savoir l'espace de co
 > - Léger doute en ce qui concerne les contrôleurs. En effet, `HomeController`, `SingleController` et `AdminController` font tous trois appel au modèle `ArticleManager`, qui s'occupe de la connexion à la base de données. **N'y a-t-il pas plus efficace ?**
 > -  Le modèle `ArticleManager` permet maintenant d'obtenir la date du post d'un article. **Cependant, la façon de faire est-elle la bonne ?**
 > - La page `index.php` DOIT être amélioré. Mais comment ? Et surtout, les contrôles (`isset`) pour la publication, l'édition et la suppression d'articles sont-ils à leur place ?
+
+#### *Samedi 25/02/2017*
+
+Plusieurs semaines ont passé depuis la dernière mise à jour de ce document. Il est temps de faire un point sur le projet. J'ai été un peu surpris par la quantité de code requise pour ce projet, c'est pourquoi j'ai pris un peu de retard.
+
+**La page '*home*'**
+Elle affiche les articles dans l'ordre décroissant. Le contenu n'est pas affiché entièrement (utilisation de la fonction `substr()`, suivi de points de suspension. Un bouton "Lire la suite" se trouve sous chaque article. Un délimiteur (`<hr />`) est placé sous chacun d'eux. L'affichage est limité à 3 articles. Un système de pagination a été mis en place pour ne pas surcharger la page. Grâce à Twitter Bootstrap, la page semble entièrement responsive (testée sous *Chrome*, *Firefox* et *Safari*).
+
+**La page '*Single*'**
+En cliquant sur le bouton "Lire la suite" de la page *home*, on se retrouve sur la page *single*. Elle se charge d'afficher l'article (complet) sur la partie gauche de la page, tandis qu'un `<aside>`, à droite, se charge d'afficher la liste des cinq derniers articles en date.
+L'affichage de l'article complet comprend :
+
+ - Le titre (bien mis en avant) ;
+ - La date de publication (affichée entre balises `<small></small>` ;
+ - Un bouton *Modifier* (si l'utilisateur est connecté au compte administrateur) ;
+ - L'article complet.
+
+Sous chaque article, un espace 'Commentaire'. Celui-ci affiche le total de commentaires de l'article, puis les affiche s'il y en a. Les commentaires ne peuvent tenir que sur un niveau pour le moment : le but étant d'atteindre trois niveaux de commentaires à la fin de ce projet.
+Sous l'affichage des commentaires se trouve un formulaire pour en publier un.
+Enfin, un lien permet de retourner vers la page d'accueil.
+
+**La page '*Admin*'**
+L'image décorative précédemment ajoutée a été retirée (pour le moment). L'espace d'administration se compose de plusieurs onglets : tableau de bord, mes articles, écrire, commentaires et réglages. Je n'entre pas dans les détails, car l'espace d'administration est encore en travaux.
+
+Les pages *About* et *Contact* ont été ajoutées au projet, mais ne sont pas encore fonctionnelles.
+Une page d'erreur *404 Page Not Found* a été créée et est fonctionnelle, mais reste à être améliorée.
+
+####Les questions à poser au mentor à la prochaine session :
+
+ 1. À propos des messages flash
+Dans `vues/Admin.php` (ligne 122), `app/admin/admin-list-articles` (ligne 6) et `app/admin/admin-write` (ligne 27), y a-t-il une meilleure solution pour faire apparaître des messages de confirmation ? J'ai essayé de faire la même chose que dans le TP Système de News sur OpenClassrooms, mais je n'ai pas réussi.
+ 
+ 2. À propos de certaines classes
+Pourrait-on vérifier ensemble les classes `modeles/Comment.php`, `modeles/CommentManager.php`, `modeles/User.php` et `modeles/UserManager.php` ? J'aimerais savoir si elles peuvent (doivent ?) être améliorées ou modifier. J'aimerais également m'attarder sur l'ajout d'utilisateurs, mais également la vérification qu'une personne se trouve en base de données pour la connexion à l'espace d'administration, par exemple.
+
+ 3. À propos des 'require'
+ Comment simplifier les '*require*' dans `public/index.php` ?
+ 
+ 4. À propos de la rédaction de la présentation de la page *About*
+J'aimerais permettre à l'administrateur de rédiger sa présentation '*À propos*' dans l'espace d'administration. Est-ce possible ? Si oui, comment s'y prendre ?
+
+ 5. À propos de la sécurité
+Y a-t-il, selon toi, des problèmes de sécurités évidents ?

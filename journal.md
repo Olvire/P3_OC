@@ -122,17 +122,22 @@ Une page d'erreur *404 Page Not Found* a été créée et est fonctionnelle, mai
 
 ####Les questions à poser au mentor à la prochaine session :
 
- 1. À propos des messages flash
+**À propos des messages flash**
+
 Dans `vues/Admin.php` (ligne 122), `app/admin/admin-list-articles` (ligne 6) et `app/admin/admin-write` (ligne 27), y a-t-il une meilleure solution pour faire apparaître des messages de confirmation ? J'ai essayé de faire la même chose que dans le TP Système de News sur OpenClassrooms, mais je n'ai pas réussi.
  
- 2. À propos de certaines classes
+**À propos de certaines classes**
+
 Pourrait-on vérifier ensemble les classes `modeles/Comment.php`, `modeles/CommentManager.php`, `modeles/User.php` et `modeles/UserManager.php` ? J'aimerais savoir si elles peuvent (doivent ?) être améliorées ou modifier. J'aimerais également m'attarder sur l'ajout d'utilisateurs, mais également la vérification qu'une personne se trouve en base de données pour la connexion à l'espace d'administration, par exemple.
 
- 3. À propos des 'require'
- Comment simplifier les '*require*' dans `public/index.php` ?
- 
- 4. À propos de la rédaction de la présentation de la page *About*
+**À propos des 'require'**
+
+Comment simplifier les '*require*' dans `public/index.php` ?
+
+**À propos de la rédaction de la présentation de la page *About***
+
 J'aimerais permettre à l'administrateur de rédiger sa présentation '*À propos*' dans l'espace d'administration. Est-ce possible ? Si oui, comment s'y prendre ?
 
- 5. À propos de la sécurité
+**À propos de la sécurité**
+
 Y a-t-il, selon toi, des problèmes de sécurités évidents ?

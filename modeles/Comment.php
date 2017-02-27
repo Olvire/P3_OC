@@ -9,7 +9,7 @@ class Comment
 	private $content;
 	private $date_post;
 	private $author;
-	private $signals = 0;
+	private $signaler;
 
 	public function __construct($value = [])
 	{
@@ -85,11 +85,11 @@ class Comment
 		}
 	}
 
-	public function set_signals($signals)
+	public function set_signaler($signaler)
 	{
-		if(is_int($signals) AND !empty($signals))
+		if(is_int($signaler) AND !empty($signaler))
 		{
-			$this->signals = $signals;
+			$this->signaler = $signaler;
 		}
 	}
 	
@@ -129,8 +129,8 @@ class Comment
 		return $this->author;
 	}
 
-	public function get_signals()
+	public function get_signaler()
 	{
-		return $this->signals;
+		return $this->signaler;
 	}
 }

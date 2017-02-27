@@ -25,21 +25,32 @@ class ViewHome
 				foreach($this->liste_articles as $article) {
 					?>
 					<div class="home-article">
-						<div class="home-article-header">
-							<h2><?= htmlspecialchars($article->get_title()); ?></h2>
-							<hr>
+						<div class="row">
+							<div class="col-md-2">
+								<div class="post-date-big text-center">
+									<i class="fa fa-clock-o" aria-hidden="true"></i><br>
+									<small><?= $article->get_date_post()->format("d/m/y H:i"); ?></small>	
+								</div>
+							</div>
+							<div class="col-md-10">
+								<div class="home-article-header">
+									<h2><?= htmlspecialchars($article->get_title()); ?></h2>
+									<p class="post-date-small"><small>Publié le <?= $article->get_date_post()->format('d/m/y à H:i:s'); ?></small></p>
+									<hr>
+								</div>
+								<div class="home-article-content">
+									<?= substr($article->get_content(), 0, 400) . '...'; ?>
+								</div>
+								<p><a class="btn btn-default" href="index.php?p=single&amp;id=<?= $article->get_id(); ?>">Lire la suite</a></p>
+							</div>
 						</div>
-						<div class="home-article-content">
-							<?= substr($article->get_content(), 0, 400) . '...'; ?>
-						</div>
-						<a class="btn btn-default" href="index.php?p=single&amp;id=<?= $article->get_id(); ?>">Lire la suite</a>
 					</div>
 
 					<hr class="home-hr">
-					<?php
+				<?php
 				}
 				?>
-				<nav aria-label="Page navigation">
+				<nav aria-label="Page navigation" class="text-center">
 					<ul class="pagination">
 						<?php
 						for($i = 1; $i <= $this->nombre_de_pages; $i++) {

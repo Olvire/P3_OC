@@ -18,7 +18,8 @@ class ArticleManager
 
 	public function count()
 	{
-		return $this->db->query('SELECT COUNT(*) FROM articles')->fetchColumn();
+		$result = $this->db->query('SELECT COUNT(*) FROM articles')->fetchColumn();
+		return $result;
 	}
 
 	public function add($title, $author, $content)

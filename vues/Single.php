@@ -25,7 +25,7 @@ class ViewSingle
 					<article class="col-md-8">
 						<div class="article-unique-header">
 							<h1><?= htmlspecialchars($this->articleUnique->get_title()); ?></h1>
-							<small>Publié le <?= $this->articleUnique->get_date_post()->format('d/m/Y') ?></small><br>
+							<p class="date-post"><small>Publié le <?= $this->articleUnique->get_date_post()->format('d/m/Y') ?></small></p>
 							<?php 
 							if(isset($_SESSION['username']) AND isset($_SESSION['password'])) { 
 								echo '<small><a class="btn btn-default btn-xs" href="index.php?p=admin&amp;menu=write&amp;action=edit&amp;id='.$this->articleUnique->get_id().'">Modifier</a></small>'; 
@@ -72,7 +72,6 @@ class ViewSingle
 
 					<aside class="col-md-offset-1 col-md-3">
 						<h3>Les derniers articles</h3>
-						<hr>
 
 						<?php
 						foreach($this->lastArticles as $article)
@@ -80,10 +79,7 @@ class ViewSingle
 						?>
 							<h5><a href="?p=single&amp;id=<?= $article->get_id(); ?>"><?= $article->get_title(); ?></a></h5>
 							<small><em><i class="fa fa-calendar" aria-hidden="true"></i> <?= $article->get_date_post()->format('d/m/y'); ?></em></small>
-							<div class="row">
-
-								<p><?= substr($article->get_content(), 0, 100) . '...'; ?></p>
-							</div>
+							<p><?= substr($article->get_content(), 0, 100) . '...'; ?></p>
 							<hr>
 						<?php
 						}

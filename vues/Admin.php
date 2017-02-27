@@ -1,20 +1,26 @@
 <?php
-/**
- * Class for view admin.
- */
+
 class ViewAdmin
 {
 	private $listArticles;
 	private $lastArticles;
 	private $selectedTab;
 	private $article;
+	private $signaledComments;
+	private $totalArticles;
+	private $totalComments;
+	private $listComments;
 
-	public function __construct($listArticles, $lastArticles, $selectedTab, $article)
+	public function __construct($listArticles, $lastArticles, $selectedTab, $article, $signaledComments, $totalArticles, $totalComments, $listComments)
 	{
 		$this->listArticles = $listArticles;
 		$this->lastArticles = $lastArticles;
 		$this->selectedTab = $selectedTab;
 		$this->article = $article;
+		$this->signaledComments = $signaledComments;
+		$this->totalArticles = $totalArticles;
+		$this->totalComments = $totalComments;
+		$this->listComments = $listComments;
 	}
 
 	public function display()
@@ -93,7 +99,33 @@ class ViewAdmin
 					?>
 					<h3>Commentaires</h3>
 					<br>
-					<p>Soon...</p>
+					<table class="table table-striped table-hover">
+						<thead>
+							<th>De</th>
+							<th>Contenu</th>
+							<th>Article</th>
+						</thead>
+						
+						<tbody>
+						<?php
+						foreach($this->listComments as $comment) {
+						?>
+						<tr>
+							<td class="col-xs-1">
+								<strong><?= $comment->get_author(); ?></strong>
+							</td>
+							<td class="col-xs-10">
+								<em><?= substr($comment->get_content(), 0, 200); ?></em>
+							</td>
+							<td class="col-xs-1">
+								<a href="index.php?p=single&amp;id=<?= $comment->get_article_id(); ?>"><?= $comment->get_article_id(); ?></a>
+							</td>
+						</div>
+						<?php
+						}
+						?>
+						</tbody>
+					</table>
 					<?php
 					}
 

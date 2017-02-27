@@ -27,6 +27,12 @@ class CommentManager
 		$request->execute();
 	}
 
+	public function get_total_count()
+	{
+		$result = $this->db->query('SELECT COUNT(*) FROM comments')->fetchColumn();
+		return $result;
+	}
+
 	public function count($article_id)
 	{
 		$request = $this->db->prepare('SELECT COUNT(*) FROM comments WHERE article_id = :article_id');
@@ -34,6 +40,31 @@ class CommentManager
 		$request->execute();
 
 		return $request->fetchColumn();
+	}
+
+	public function get_specific_comment($signaled_id)
+	{
+		$request = $this->db->prepare('SELECT * FROM comments WHERE id = :signaled_id');
+		$request->bindValue(':signaled_id', (int) $signaled_id);
+		$request->execute();
+
+		$comment = $request->fetch();
+
+		$request->closeCursor();
+
+		return $comment;
+	}
+
+	public function get_all_comments()
+	{
+		$result = $this->db->query('SELECT * FROM comments ORDER BY article_id');
+		$listComments = $result->fetchAll(PDO::FETCH_CLASS, "Comment");
+
+		foreach($listComments as $comment) {
+			$comment->set_date_post(new DateTime($comment->get_date_post()));
+		}
+		
+		return $listComments;
 	}
 
 	public function get_comments($article_id)
@@ -52,6 +83,32 @@ class CommentManager
 		$request->closeCursor();
 
 		return $listComments;
+	}
+
+	public function update_signal($comment_id)
+	{
+		$req = $this->db->prepare('UPDATE comments SET `signaler` = `signaler` + 1 WHERE id = :id');
+		$req->bindValue(':id', (int) $comment_id);
+		$req->execute();
+	}
+
+	public function reset_signal($comment_id)
+	{
+		$req = $this->db->prepare('UPDATE comments SET `signaler` = 0 WHERE id = :id');
+		$req->bindValue(':id', (int) $comment_id);
+		$req->execute();
+	}
+
+	public function get_signaled()
+	{
+		$result = $this->db->query('SELECT * FROM comments WHERE signaler > 0 ORDER BY signaler DESC');
+		$signaled = $result->fetchAll(PDO::FETCH_CLASS, "Comment");
+
+		foreach($signaled as $comment) {
+			$comment->set_date_post(new DateTime($comment->get_date_post()));
+		}
+
+		return $signaled;
 	}
 
 	// public function get_sub_comments()

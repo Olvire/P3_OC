@@ -12,7 +12,7 @@
     </div>
 
     <div id="navbar" class="collapse navbar-collapse">
-      <ul class="nav navbar-nav">
+      <ul class="nav navbar-right navbar-nav">
         <li <?php if(!isset($_GET['p']) OR (isset($_GET['p']) AND $_GET['p'] == 'home')) echo 'class="active"'; ?>>
           <a href="index.php">Home</a>
         </li>

@@ -31,18 +31,18 @@ if(isset($_GET['p'])) {
 
 ob_start();
 if($p === 'home') {
-	$page_title .= '- Bienvenue';
+	$page_title .= ' - Bienvenue';
 	$controller = new HomeController();
     $controller->execute();
 } elseif($p === 'single') {
 	$controller = new SingleController();
     $controller->execute();
 } elseif($p === 'admin') {
-	$page_title .= '- Tableau de bord';
+	$page_title .= ' - Tableau de bord';
 	$controller = new AdminController();
 	$controller->execute();
 } elseif($p === 'about') {
-	$page_title .= '- À propos';
+	$page_title .= ' - À propos';
 	$controller = new AboutController();
 	$controller->execute();
 } else {

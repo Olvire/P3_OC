@@ -3,9 +3,16 @@ class AdminController extends Controller
 {
 	public function execute()
 	{
+		// Liés aux articles
 		$listArticles = $this->articleManager->get_list();
 		$lastArticles = $this->articleManager->get_last_articles();
-		$article = null;
+		$totalArticles = $this->articleManager->count();
+		$article = null;	
+		// Liés aux commentaires
+		$listComments = $this->commentManager->get_all_comments();
+		$totalComments = $this->commentManager->get_total_count();
+		$signaledComments = $this->commentManager->get_signaled();
+		
 		$selectedTab = 'dashboard';
 
 		// GESTION DES ONGLETS DANS L'ESPACE D'ADMINISTRATION //
@@ -53,8 +60,25 @@ class AdminController extends Controller
 			}
 		}
 
+		// GESTION DES COMMENTAIRES
+		if(isset($_GET['action'])) {
+			if($_GET['action'] == 'validate_comment')
+			{
+				$this->commentManager->reset_signal($_GET['comment_id']);
+				$_SESSION['flash']['success'] = 'Le commentaire a été validé.';
+			} 
+			elseif($_GET['action'] == 'edit_comment')
+			{
+				// Sth
+			}
+			elseif($_GET['action'] == 'delete_comment')
+			{
+				// Sth
+			}
+		}
+
 		// TRANSMISSION DES INFORMATIONS À LA VUE //
-		$viewAdmin = new ViewAdmin($listArticles, $lastArticles, $selectedTab, $article);
+		$viewAdmin = new ViewAdmin($listArticles, $lastArticles, $selectedTab, $article, $signaledComments, $totalArticles, $totalComments, $listComments);
 		$viewAdmin->display();
 	}
 }

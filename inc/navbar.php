@@ -11,14 +11,18 @@
       <a class="navbar-brand" href="index.php">Blog de Jean Forteroche</a>
     </div>
 
-    <div id="navbar" class="collapse navbar-collapse">
-      <ul class="nav navbar-right navbar-nav">
+    <div id="navbar" class="collapse navbar-collapse text-right">
+      <ul class="nav navbar-nav">
         <li <?php if(!isset($_GET['p']) OR (isset($_GET['p']) AND $_GET['p'] == 'home')) echo 'class="active"'; ?>>
-          <a href="index.php">Home</a>
+          <a href="index.php">Blog</a>
         </li>
-        <li <?php if(isset($_GET['p']) AND $_GET['p'] == 'about') echo 'class="active"'; ?>><a href="index.php?p=about">About</a></li>
-        <li <?php if(isset($_GET['p']) AND $_GET['p'] == 'contact') echo 'class="active"'; ?>><a href="index.php?p=contact">Contact</a></li>
+        <li <?php if(isset($_GET['p']) AND $_GET['p'] == 'about') echo 'class="active"'; ?>><a href="index.php?p=about">À propos</a></li>
       </ul>
+      
+      <div class="login-register text-right">
+        <a class="btn btn-default" href="#">Se connecter</a>
+        <a class="btn btn-default" href="#">S'inscrire</a>
+      </div>
     </div>
   </div>
 </nav>

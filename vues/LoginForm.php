@@ -8,12 +8,12 @@ class LoginForm
 		return "<div class=\"{$this->surround}\">{$html}</div>";
 	}
 
-	public function username_field() 
+	public function usernameField() 
 	{
 		return $this->surround('<label for="username">Nom d\'utilisateur </label> <input class="form-control" type="text" name="username" id="username" />');
 	}
 
-	public function password_field()
+	public function passwordField()
 	{
 		return $this->surround('<label for="password">Mot de passe </label> <input class="form-control" type="password" name="password" id="password" />');
 	}

@@ -2,52 +2,59 @@
 
 class CommentManager
 {
-	private $db_host;
-	private $db_name;
-	private $db_user;
-	private $db_pass;
 	private $db;
 
-	public function __construct($db_name, $db_host = 'localhost', $db_user = 'root', $db_pass = 'root')
-	{
-		$this->db_host = $db_host;
-		$this->db_name = $db_name;
-		$this->db_user = $db_user;
-		$this->db_pass = $db_pass;
-		$this->db = new PDO('mysql:host=' . $db_host . ';dbname=' . $this->db_name . ';charset=utf8', $db_user, $db_pass, array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
+	public function __construct($db) {
+		$this->db = $db;
 	}
 
-	public function add($author, $article_id, $content)
-	{
-		$request = $this->db->prepare('INSERT INTO comments(author, article_id, content, date_post) VALUES(:author, :article_id, :content, NOW())');
-		$request->bindValue(':author', $author);
-		$request->bindValue(':article_id', $article_id);
-		$request->bindValue(':content', $content);
+	/**
+	 * Add a comment
+	 * @param Comment $comment The comment
+	 */
+	public function add(Comment $comment) {
+		$req = $this->db->prepare('INSERT INTO comments (articleId, parentId, author, content, datePost) VALUES(:articleId, :parentId, :author, :content, NOW())');
+		$req->bindValue(':articleId', $comment->getArticleId());
+		$req->bindValue(':parentId', $comment->getParentId());
+		$req->bindValue(':author', $comment->getAuthor());
+		$req->bindValue(':content', $comment->getContent());
 
-		$request->execute();
+		$req->execute();
 	}
 
-	public function get_total_count()
-	{
+	/**
+	 * Gets the total count of comments.
+	 * @return int The total count.
+	 */
+	public function getTotalCount() {
 		$result = $this->db->query('SELECT COUNT(*) FROM comments')->fetchColumn();
 		return $result;
 	}
 
-	public function count($article_id)
-	{
-		$request = $this->db->prepare('SELECT COUNT(*) FROM comments WHERE article_id = :article_id');
-		$request->bindValue(':article_id', $article_id);
+	/**
+	 * Gets the number of comments on a specific article.
+	 * @param int $articleId The article identifier
+	 * @return int The number of comments on this article
+	 */
+	public function count($articleId) {
+		$request = $this->db->prepare('SELECT COUNT(*) FROM comments WHERE articleId = :articleId');
+		$request->bindValue(':articleId', $articleId);
 		$request->execute();
 
 		return $request->fetchColumn();
 	}
 
-	public function get_specific_comment($signaled_id)
-	{
-		$request = $this->db->prepare('SELECT * FROM comments WHERE id = :signaled_id');
-		$request->bindValue(':signaled_id', (int) $signaled_id);
+	/**
+	 * Gets a specific comment.
+	 * @param int $id The identifier
+	 * @return The specific comment.
+	 */
+	public function getSpecificComment($id) {
+		$request = $this->db->prepare('SELECT * FROM comments WHERE id = :id');
+		$request->bindValue(':id', (int) $id);
 		$request->execute();
 
+		$request->setFetchMode(PDO::FETCH_CLASS, "Comment");
 		$comment = $request->fetch();
 
 		$request->closeCursor();
@@ -55,29 +62,48 @@ class CommentManager
 		return $comment;
 	}
 
-	public function get_all_comments()
-	{
-		$result = $this->db->query('SELECT * FROM comments ORDER BY article_id');
+	/**
+	 * Gets all comments.
+	 * @return All comments.
+	 */
+	public function getAllComments() {
+		$result = $this->db->query('SELECT * FROM comments ORDER BY articleId, datePost');
 		$listComments = $result->fetchAll(PDO::FETCH_CLASS, "Comment");
 
 		foreach($listComments as $comment) {
-			$comment->set_date_post(new DateTime($comment->get_date_post()));
+			$comment->setDatePost(new DateTime($comment->getDatePost()));
 		}
 		
 		return $listComments;
 	}
 
-	public function get_comments($article_id)
-	{
-		$request = $this->db->prepare('SELECT * FROM comments WHERE parent_id = 0 AND article_id = :article_id ORDER BY date_post');
-		$request->bindValue(':article_id', $article_id);
+	public function getLastComments() {
+		$result = $this->db->query('SELECT * FROM comments ORDER BY datePost LIMIT 0, 5');
+		$lastComments = $result->fetchAll(PDO::FETCH_CLASS, "Comment");
+
+		foreach($lastComments as $comment) {
+			$comment->setDatePost(new DateTime($comment->getDatePost()));
+		}
+
+		return $lastComments;
+	}
+
+	/**
+	 * Gets the comments on a specific article.
+	 * @param id $articleId  The article identifier
+	 * @return object The comments.
+	 */
+	public function getComments($articleId) {
+		$request = $this->db->prepare('SELECT * FROM comments WHERE parentId = 0 AND articleId = :articleId ORDER BY datePost DESC');
+		$request->bindValue(':articleId', $articleId);
 
 		$request->execute();
 
 		$listComments = $request->fetchAll(PDO::FETCH_CLASS, "Comment");
 
 		foreach($listComments as $comment) {
-			$comment->set_date_post(new DateTime($comment->get_date_post()));
+			$this->getCommentsChildren($comment);
+			$comment->setDatePost(new DateTime($comment->getDatePost()));
 		}
 
 		$request->closeCursor();
@@ -85,47 +111,79 @@ class CommentManager
 		return $listComments;
 	}
 
-	public function update_signal($comment_id)
-	{
-		$req = $this->db->prepare('UPDATE comments SET `signaler` = `signaler` + 1 WHERE id = :id');
-		$req->bindValue(':id', (int) $comment_id);
-		$req->execute();
-	}
+	// Méthode récursive privée
+	private function getCommentsChildren(Comment $comment) {
+		$request = $this->db->prepare('SELECT * FROM comments WHERE parentId = :parentId ORDER BY datePost DESC');
+		$request->bindValue(':parentId', $comment->getId());
 
-	public function reset_signal($comment_id)
-	{
-		$req = $this->db->prepare('UPDATE comments SET `signaler` = 0 WHERE id = :id');
-		$req->bindValue(':id', (int) $comment_id);
-		$req->execute();
-	}
+		$request->execute();
 
-	public function get_signaled()
-	{
-		$result = $this->db->query('SELECT * FROM comments WHERE signaler > 0 ORDER BY signaler DESC');
-		$signaled = $result->fetchAll(PDO::FETCH_CLASS, "Comment");
+		$listComments = $request->fetchAll(PDO::FETCH_CLASS, "Comment");
 
-		foreach($signaled as $comment) {
-			$comment->set_date_post(new DateTime($comment->get_date_post()));
+		foreach($listComments as $subComment) {
+			$this->getCommentsChildren($subComment);
+			$subComment->setDatePost(new DateTime($subComment->getDatePost()));
 		}
 
-		return $signaled;
+		$request->closeCursor();
+
+		$comment->setSubComments($listComments);
 	}
 
-	// public function get_sub_comments()
-	// {
-		// TODO
-	// }
-
-	public function delete_comment($id)
-	{
-		$request = $this->db->prepare('DELETE FROM comments WHERE id = :id');
-		$request->bindValue(':id', $id);
-		
-		$request->execute();
+	/**
+	 * Signal a comment so it can be moderated in admin page
+	 * @param $comment  The comment
+	 */
+	public function signal($comment) {
+		$req = $this->db->prepare('UPDATE comments SET signaler = 1  WHERE id = :id ');
+		$req->bindValue(':id', (int) $comment->getId());
+		$req->execute();
 	}
 
-	public function delete_all()
-	{
+	/**
+	 * Validate a signaled comment
+	 * @param int $commentId The comment identifier
+	 */
+	public function validateComment($commentId) {
+		$req = $this->db->prepare('UPDATE comments SET signaler = 0 WHERE id = :id');
+		$req->bindValue(':id', (int) $commentId);
+		$req->execute();
+	}
+
+	public function countSignaledComments() {
+		$result = $this->db->query('SELECT COUNT(*) FROM comments WHERE signaler = 1')->fetchColumn();
+		return $result;
+	}
+
+	/**
+	 * Gets the signaled comment.
+	 * @return The signaled comment.
+	 */
+	public function getSignaledComments() {
+		$result = $this->db->query('SELECT * FROM comments WHERE signaler > 0 ORDER BY signaler DESC');
+		$signaledComments = $result->fetchAll(PDO::FETCH_CLASS, "Comment");
+
+		foreach($signaledComments as $comment) {
+			$comment->setDatePost(new DateTime($comment->getDatePost()));
+		}
+
+		return $signaledComments;
+	}
+
+	/**
+	 * Delete a specific comment
+	 * @param int $id The identifier
+	 */
+	public function deleteComment($commentId) {
+		$req = $this->db->prepare('DELETE FROM comments WHERE id = :id');
+		$req->bindValue(':id', $commentId);
+		$req->execute();
+	}
+
+	/**
+	 * Delete all comments
+	 */
+	public function deleteAll() {
 		$result = $this->db->exec('TRUNCATE TABLE comments');
 		return $result;
 	}

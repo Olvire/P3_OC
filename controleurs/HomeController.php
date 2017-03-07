@@ -1,37 +1,32 @@
 <?php
 
-class HomeController extends Controller
-{
-	public function execute()
-	{
+class HomeController extends Controller {
+	public function execute() {
 		// Nombre d'articles que l'on veut par page.
-		$articles_par_page = 3;
+		$articlesPerPage = 4;
 
 		// On compte le nombre total d'articles présents dans la bdd.
-		$nombre_articles = $this->articleManager->count();
+		$numberOfArticles = $this->articleManager->count();
 
 		// Nombre de pages.
-		$nombre_de_pages = ceil($nombre_articles / $articles_par_page);
+		$numberOfPages = ceil($numberOfArticles / $articlesPerPage);
 
-		if(isset($_GET['page']))
-		{
-			$page_actuelle = intval($_GET['page']);
+		if(isset($_GET['page']) AND empty($_GET['page'])) {
+			$currentPage = 1;
+		} elseif(isset($_GET['page']) AND !empty($_GET['page'])) {
+			$currentPage = intval($_GET['page']);
 
-			if($page_actuelle > $nombre_de_pages)
-			{
-				$page_actuelle = $nombre_de_pages;
+			if($currentPage > $numberOfPages) {
+				$currentPage = $numberOfPages;
 			}
-		}
-		else
-		{
-			$page_actuelle = 1;
+		} else {
+			$currentPage = 1;
 		}
 
-		$premier_article = ($page_actuelle - 1) * $articles_par_page;
+		$firstArticle = ($currentPage - 1) * $articlesPerPage;
+		$listOfArticles = $this->articleManager->getList($firstArticle, $articlesPerPage);
 
-		$liste_articles = $this->articleManager->get_list($premier_article, $articles_par_page);
-
-		$viewHome = new ViewHome($liste_articles, $nombre_de_pages, $page_actuelle);
+		$viewHome = new ViewHome($listOfArticles, $numberOfPages, $currentPage);
 		$viewHome->display();
 	}
 }

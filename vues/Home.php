@@ -4,15 +4,15 @@
  */
 class ViewHome
 {
-	private $liste_articles;
-	private $nombre_de_pages;
-	private $page_actuelle;
+	private $listOfArticles;
+	private $numberOfPages;
+	private $currentPage;
 
-	public function __construct($liste_articles, $nombre_de_pages, $page_actuelle)
+	public function __construct($listOfArticles, $numberOfPages, $currentPage)
 	{
-		$this->liste_articles = $liste_articles;
-		$this->nombre_de_pages = $nombre_de_pages;
-		$this->page_actuelle = $page_actuelle;
+		$this->listOfArticles = $listOfArticles;
+		$this->numberOfPages = $numberOfPages;
+		$this->currentPage = $currentPage;
 	}
 	
 	public function display()
@@ -20,52 +20,54 @@ class ViewHome
 		?>
 		
 		<div class="home-container">
-			<div class="container">
-				<?php
-				foreach($this->liste_articles as $article) {
-					?>
-					<div class="home-article">
-						<div class="row">
-							<div class="col-md-2">
-								<div class="post-date-big text-center">
-									<i class="fa fa-clock-o" aria-hidden="true"></i><br>
-									<small><?= $article->get_date_post()->format("d/m/y H:i"); ?></small>	
-								</div>
-							</div>
-							<div class="col-md-10">
-								<div class="home-article-header">
-									<h2><?= htmlspecialchars($article->get_title()); ?></h2>
-									<p class="post-date-small"><small>Publié le <?= $article->get_date_post()->format('d/m/y à H:i:s'); ?></small></p>
-									<hr>
-								</div>
-								<div class="home-article-content">
-									<?= substr($article->get_content(), 0, 400) . '...'; ?>
-								</div>
-								<p><a class="btn btn-default" href="index.php?p=single&amp;id=<?= $article->get_id(); ?>">Lire la suite</a></p>
-							</div>
-						</div>
-					</div>
 
-					<hr class="home-hr">
-				<?php
-				}
-				?>
-				<nav aria-label="Page navigation" class="text-center">
-					<ul class="pagination">
+			<div class="home-pic-top"></div>
+			
+			<div class="container">
+				<div class="row">
+					<div class="col-xs-12>
 						<?php
-						for($i = 1; $i <= $this->nombre_de_pages; $i++) {
-							// Différenciation de la page actuelle et de la page accessible.
-							if($i == $this->page_actuelle) { 
-								echo '<li class="active"><a href="#">' . $i . '<span class="sr-only">(current)</span></a></li>';
-							} else {
-								echo '<li><a href="?page=' . $i . '">' . $i . '</a></li>';
+						foreach($this->listOfArticles as $article) { ?>
+							<article>
+								<section class="header">
+									<h2><?= htmlspecialchars($article->getTitle()); ?></h2>
+									<p class="date-comments">
+										<small>
+											<i class="fa fa-clock-o" aria-hidden="true"></i>
+											<?= $article->getDatePost()->format("d/m/y"); ?> |
+										</small>
+									</p>
+								</section>
+
+								<section class="content">
+									<?= substr($article->getContent(), 0, 700) . '...'; ?>
+								</section>
+										
+								<br>
+
+								<p class="text-right"><a href="index.php?p=single&amp;id=<?= $article->getId(); ?>" class="btn btn-default">Lire la suite</a></p>
+							</article>
+
+							<?php
 							}
-						}
-						?>
-					</ul>
-				</nav>
-			</div>
-		</div>
+							?>
+							<nav aria-label="Page navigation" class="text-center">
+								<ul class="pagination">
+								<?php
+								for($i = 1; $i <= $this->numberOfPages; $i++) {
+									if($i == $this->currentPage) { 
+										echo '<li class="active"><a href="#">' . $i . '<span class="sr-only">(current)</span></a></li>';
+									} else {
+										echo '<li><a href="?page=' . $i . '">' . $i . '</a></li>';
+									}
+								}
+								?>
+								</ul>
+							</nav>
+					</div>
+				</div> <!-- /row -->
+			</div> <!-- /container -->
+		</div><!-- /home-container -->
 
 		<?php
 	}

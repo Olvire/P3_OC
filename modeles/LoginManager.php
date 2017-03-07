@@ -1,6 +1,6 @@
 <?php
 
-class UserManager {
+class LoginManager {
 
 	private $db;
 
@@ -10,13 +10,6 @@ class UserManager {
 
 	public function addUser(User $user) {
 		$req = $this->db->prepare('INSERT INTO users(username, password, email, date_inscription) VALUES(:username, :password, :email, NOW()');
-		$req->bindValue(':username', $user->getUsername());
-		$req->bindValue(':password', $user->getPassword());
-		$req->bindValue(':email', $user->getEmail());
-
-		$req->execute();
-
-		$result = $req->fetch();
 	}
-	
+
 }

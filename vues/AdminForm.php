@@ -11,25 +11,25 @@ class AdminForm
 	/**
 	 * @return string A title input for the article
 	 */
-	public function title_field()
+	public function titleField()
 	{
 		return $this->surround('<label for="title">Titre </label><input type="text" name="title" class="form-control" value="' . isset($_GET['action']) AND $_GET['action'] == 'edit' ? 
-				$articleManager->get_title() : null . '">');
+				$articleManager->getTitle() : null . '">');
 	}
 
-	public function author_field()
+	public function authorField()
 	{
 		return $this->surround('<label for="author">Auteur </label><input type="text" name="author" class="form-control" value="' . isset($_GET['action']) AND $_GET['action'] == 'edit' ? 
-				$articleManager->get_author() : null . '">');
+				$articleManager->getAuthor() : null . '">');
 	}
 
 	/**
 	 * @return string A content textarea for the article
 	 */
-	public function content_field()
+	public function contentField()
 	{
 		return $this->surround('<label for="content">Contenu </label><textarea name="content" class="form-control">' .isset($_GET['action']) AND $_GET['action'] == 'edit' ? 
-				$articleManager->get_content() : null . '</textarea>');
+				$articleManager->getContent() : null . '</textarea>');
 	}
 
 	/**

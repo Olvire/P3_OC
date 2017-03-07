@@ -3,15 +3,15 @@
 class ViewSingle
 {
 	private $articleUnique;
-	private $listeCommentaires;
-	private $nb;
+	private $listOfComments;
+	private $numberOfComments;
 	private $lastArticles;
 
-	public function __construct($articleUnique, $listeCommentaires, $nb, $lastArticles)
+	public function __construct($articleUnique, $listOfComments, $numberOfComments, $lastArticles)
 	{
 		$this->articleUnique = $articleUnique;
-		$this->listeCommentaires = $listeCommentaires;
-		$this->nb = $nb;
+		$this->listOfComments = $listOfComments;
+		$this->numberOfComments = $numberOfComments;
 		$this->lastArticles = $lastArticles;
 	}
 
@@ -22,54 +22,147 @@ class ViewSingle
 		<div class="single-container">
 			<div class="container">
 				<div class="row">
+					<!-- ARTICLE UNIQUE -->
 					<article class="col-md-8">
 						<div class="article-unique-header">
-							<h1><?= htmlspecialchars($this->articleUnique->get_title()); ?></h1>
-							<p class="date-post"><small>Publié le <?= $this->articleUnique->get_date_post()->format('d/m/Y') ?></small></p>
-							<?php 
-							if(isset($_SESSION['username']) AND isset($_SESSION['password'])) { 
-								echo '<small><a class="btn btn-default btn-xs" href="index.php?p=admin&amp;menu=write&amp;action=edit&amp;id='.$this->articleUnique->get_id().'">Modifier</a></small>'; 
+							<h1><?= htmlspecialchars($this->articleUnique->getTitle()); ?></h1>
+							<p class="date-post">
+								Publié le <?= $this->articleUnique->getDatePost()->format('d/m/Y') ?>
+								<?php
+							if($this->articleUnique->getDateEdit()->format('d/m/Y') !== '30/11/-0001') {
+								echo '| Cet article a été édité le ' . $this->articleUnique->getDateEdit()->format('d/m/Y à H:i:s');
+							}
+							if(isset($_SESSION['username'])) { 
+								echo '<small><a class="btn btn-default btn-xs" href="index.php?p=admin&amp;menu=write&amp;action=edit&amp;id='.$this->articleUnique->getId().'">Éditer</a></small>'; 
 							} ?>
+							</p>
 						</div>
-
-						<div class="article-content">
-							<?= $this->articleUnique->get_content(); ?>
-						</div>
+						
+						<!-- Contenu de l'article unique -->
+						<div class="article-content"><?= $this->articleUnique->getContent(); ?></div>
 
 						<hr>
 
-						<h4 id="comments">Commentaires (<?= $this->nb; ?>)</h4>
+						<h4 id="comments">Commentaires (<?= $this->numberOfComments; ?>)</h4>
 						
-						<div class="comments-container">
+						<?php
+						// Premier niveau de commentaires
+						foreach($this->listOfComments as $comment) {
+						?>
+						<div class="comment">
+							<div class="comment-header">
+								<p>	
+									<strong><?= htmlspecialchars($comment->getAuthor()); ?></strong>
+									<small>Le <?= $comment->getDatePost()->format('d/m/y à H:i:s'); ?>
+									<a href="">Répondre</a></small>
+									
+								</p>
+
+							</div>
+							<div class="comment-content">
+								<p><?= htmlspecialchars($comment->getContent()); ?></p>
+							</div>
+
 							<?php
-							foreach($this->listeCommentaires as $comment) {
-								?>
-								<div id="comment">
+							// Deuxième niveau de commentaires
+							foreach($comment->getSubComments() as $subComment) {
+							?>
+							<div class="subComment">
+								<div class="comment-header">
 									<p>
-										<strong><?= htmlspecialchars($comment->get_author()); ?></strong>
-										<small>Le <?= $comment->get_date_post()->format('d/m/y à H:i:s'); ?> <span id="commentaire-repondre">Répondre</span></small><br>
-										<em><?= htmlspecialchars($comment->get_content()); ?></em>
+										<strong><?= htmlspecialchars($subComment->getAuthor()); ?></strong>
+										<small>Le <?= $subComment->getDatePost()->format('d/m/y H:i:s'); ?></small>
 									</p>
-									
-									<?php
-									// Afficher ici la liste des sous-commentaires
-									?>
-									
-									<small><a href="index.php?p=single&id=<?= $this->articleUnique->get_id(); ?>&action=signal&comment_id=<?= $comment->get_id(); ?>">Signaler</a></small>
 								</div>
-							<?php
+								<div class="comment-content">
+									<p><?= htmlspecialchars($subComment->getContent()); ?></p>
+								</div>
+
+								<?php
+								// Troisième et dernier niveau de commentaires
+								foreach($subComment->getSubComments() as $subSubComment) {
+								?>
+								<div class="subSubComment">
+									<div class="comment-header">
+										<p>
+											<strong><?= htmlspecialchars($subSubComment->getAuthor()); ?></strong>
+											<small>Le <?= $subSubComment->getDatePost()->format('d/m/y H:i:s'); ?></small>
+										</p>
+									</div>
+
+									<div class="comment-content">
+										<p><?= htmlspecialchars($subSubComment->getContent()); ?></p>
+									</div>
+
+									<div class="comment-footer">
+										<form action="index.php?p=single&amp;id=<?= $this->articleUnique->getId(); ?>#comments" method="post">
+											<?php
+											if(!isset($_SESSION['username'])) {
+												?>
+												<input type="text" name="author" placeholder="Pseudo" required />
+												<?php
+											}
+											?>
+											<textarea name="content" placeholder="Votre commentaire"></textarea>
+											<input type="hidden" name="parentId" value="<?= $subComment->getId(); ?>">
+											<input type="submit" value="Envoyer" class="btn btn-default btn-xs" required />
+										</form>
+									</div>
+								</div>
+								<?php
+								}
+								?>
+								<div class="comment-footer">
+									<form action="index.php?p=single&amp;id=<?= $this->articleUnique->getId(); ?>#comments" method="post">
+										<?php
+										if(!isset($_SESSION['username'])) {
+											?>
+											<input type="text" name="author" placeholder="Pseudo" required />
+											<?php
+										}
+										?>
+										<textarea name="content" placeholder="Votre commentaire"></textarea>
+										<input type="hidden" name="parentId" value="<?= $subComment->getId(); ?>">
+										<input type="submit" value="Envoyer" class="btn btn-default btn-xs" required />
+									</form>
+								</div>
+							</div>
+							<?php	
 							}
 							?>
+
+							<div class="comment-footer">
+								<?php
+								?>
+								<form action="index.php?p=single&amp;id=<?= $this->articleUnique->getId(); ?>#comments" method="post">
+									<?php
+									if(!isset($_SESSION['username'])) {
+										?>
+										<input type="text" name="author" placeholder="Pseudo" required />
+										<?php
+									}
+									?>
+									<textarea name="content" placeholder="Votre commentaire"></textarea>
+									<input type="hidden" name="parentId" value="<?= $comment->getId(); ?>">
+									<input type="submit" value="Envoyer" class="btn btn-default btn-xs" required />
+								</form>
+							</div>
 						</div>
+						<?php
+						}
+						?>
 
 						<hr>
-
-						<h4 id="poster-commentaire">Poster un commentaire</h4>
-						<?php include('../app/single/single-write-comment.php'); ?>
+						
+						<!-- Poster un nouveau commentaire -->
+						<h4 id="poster-commentaire">Poster un nouveau commentaire</h4>
+						<?php include('../inc/single/single-write-comment.php'); ?>
 						<br>
-						<a href="index.php"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Retour à la page d'accueil</a>
+						<a class="to-home" href="index.php"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Retour à la page d'accueil</a>
 					</article>
+					
 
+					<!-- Liste des 3 derniers articles -->
 					<aside class="col-md-offset-1 col-md-3">
 						<h3>Les derniers articles</h3>
 
@@ -77,9 +170,9 @@ class ViewSingle
 						foreach($this->lastArticles as $article)
 						{
 						?>
-							<h5><a href="?p=single&amp;id=<?= $article->get_id(); ?>"><?= $article->get_title(); ?></a></h5>
-							<small><em><i class="fa fa-calendar" aria-hidden="true"></i> <?= $article->get_date_post()->format('d/m/y'); ?></em></small>
-							<p><?= substr($article->get_content(), 0, 100) . '...'; ?></p>
+							<h5><a class="aside-article-name" href="?p=single&amp;id=<?= $article->getId(); ?>"><?= $article->getTitle(); ?></a></h5>
+							<small><em><i class="fa fa-calendar" aria-hidden="true"></i> Publié le <?= $article->getDatePost()->format('d/m/y'); ?></em></small>
+							<p><?= substr($article->getContent(), 0, 150) . '...'; ?></p>
 							<hr>
 						<?php
 						}

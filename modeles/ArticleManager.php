@@ -1,39 +1,47 @@
 <?php
 class ArticleManager
 {
-	private $db_host;
-	private $db_name;
-	private $db_user;
-	private $db_pass;
 	private $db;
 
-	public function __construct($db_name, $db_host = 'localhost', $db_user = 'root', $db_pass = 'root')
+	public function __construct($db)
 	{
-		$this->db_host = $db_host;
-		$this->db_name = $db_name;
-		$this->db_user = $db_user;
-		$this->db_pass = $db_pass;
-		$this->db = new PDO('mysql:host=' . $db_host . ';dbname=' . $this->db_name . ';charset=utf8', $db_user, $db_pass, array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
+		$this->db = $db;
 	}
 
+	/**
+	 * Counts the number of articles in the database
+	 * @return int The number of articles
+	 */
 	public function count()
 	{
 		$result = $this->db->query('SELECT COUNT(*) FROM articles')->fetchColumn();
 		return $result;
 	}
 
-	public function add($title, $author, $content)
+	/**
+	 * Add an article into the database
+	 * @param Article $article The article (object)
+	 */
+	public function add(Article $article)
 	{
-		$request = $this->db->prepare('INSERT INTO articles(title, content, author, date_post) VALUES(:title, :content, :author, NOW())');
-		$request->bindValue(':title', $title);
-		$request->bindValue(':author', $author);
-		$request->bindValue(':content', $content);
-		$request->execute();
+		$req = $this->db->prepare('INSERT INTO articles(title, content, author, datePost) VALUES(:title, :content, :author, NOW())');
+		$req->bindValue(':title', $article->getTitle());
+		$req->bindValue(':content', $article->getContent());
+		$req->bindValue(':author', $article->getAuthor());
+
+		$req->execute();
 	}
 
+	/**
+	 * Updates articles values
+	 * @param string $title The articles title
+	 * @param string $author The articles author
+	 * @param string $content The articles content
+	 * @param int $id The aticles identifier
+	 */
 	public function update($title, $author, $content, $id)
 	{
-		$request = $this->db->prepare('UPDATE articles SET title = :title, author = :author, content = :content, date_edit = NOW() WHERE id = :id');
+		$request = $this->db->prepare('UPDATE articles SET title = :title, author = :author, content = :content, dateEdit = NOW() WHERE id = :id');
 		$request->bindValue(':title', $title);
 		$request->bindValue(':author', $author);
 		$request->bindValue(':content', $content);
@@ -41,63 +49,80 @@ class ArticleManager
 		$request->execute();
 	}
 
-	public function get_list($premier_article = -1, $articles_par_pages = -1) 
+	/**
+	 * Gets the list of articles.
+	 * @param int $firstArticle The first article
+	 * @param int $articlesPerPage The number of articles per page
+	 * @return The list.
+	 */
+	public function getList($firstArticle = -1, $articlesPerPage = -1) 
 	{
-		$sql = 'SELECT * FROM articles ORDER BY date_post DESC';
+		$sql = 'SELECT * FROM articles ORDER BY datePost DESC';
 		
-		// On vérifie l'intégrité des paramètres fournis.
-		if($premier_article != -1 OR $articles_par_pages != -1)
+		// Cheching the integrity of the given data
+		if($firstArticle != -1 OR $articlesPerPage != -1)
 		{
-			$sql .= ' LIMIT ' . (int) $articles_par_pages . ' OFFSET ' . (int) $premier_article;
+			$sql .= ' LIMIT ' . (int) $articlesPerPage . ' OFFSET ' . (int) $firstArticle;
 		}
 
 		$request = $this->db->query($sql);
 		$request->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, 'Article');
 
-		$liste_articles = $request->fetchAll();
+		$listOfArticles = $request->fetchAll();
 
-		// On parcourt notre liste d'articles pour pouvoir placer des instances de DateTime en guise de dates d'ajout et de modification.
-		foreach($liste_articles as $article)
+		// Loop on the articles list in order to put DateTime as datePost and dateEdit.
+		foreach($listOfArticles as $article)
 		{
-			$article->set_date_post(new DateTime($article->get_date_post()));
-			$article->set_date_edit(new DateTime($article->get_date_edit()));
+			$article->setDatePost(new DateTime($article->getDatePost()));
+			$article->setDateEdit(new DateTime($article->getDateEdit()));
 		}
 
 		$request->closeCursor();
 
-		return $liste_articles;
+		return $listOfArticles;
 	}
 
-	public function get_last_articles() {
-		$result = $this->db->query('SELECT * FROM articles ORDER BY date_post DESC LIMIT 0, 5');
+	public function getLastArticles() {
+		$result = $this->db->query('SELECT * FROM articles ORDER BY datePost DESC LIMIT 0, 3');
 		$lastArticles = $result->fetchAll(PDO::FETCH_CLASS, 'Article');
 		foreach($lastArticles as $article)
 		{
-			$article->set_date_post(new DateTime($article->get_date_post()));
-			$article->set_date_edit(new DateTime($article->get_date_edit()));
+			$article->setDatePost(new DateTime($article->getDatePost()));
+			$article->setDateEdit(new DateTime($article->getDateEdit()));
 		}
 		$result->closeCursor();
 		return $lastArticles;
 	}
 
-	public function get_unique($id)
+	/**
+	 * Gets a unique article (for single page).
+	 * @param int $id The identifier of the article
+	 * @return The article.
+	 */
+	public function getUnique($id)
 	{
 		$request = $this->db->prepare('SELECT * FROM articles WHERE id = :id');
 		$request->bindValue(':id', (int) $id);
 		$request->execute();
 		$request->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, 'Article');
 		$article = $request->fetch();
-		$article->set_date_post(new DateTime($article->get_date_post()));
-		$article->set_date_edit(new DateTime($article->get_date_edit()));
+		$article->setDatePost(new DateTime($article->getDatePost()));
+		$article->setDateEdit(new DateTime($article->getDateEdit()));
 		return $article;
 	}
 
-	public function delete_article()
+	/**
+	 * Delete an article
+	 */
+	public function deleteArticle()
 	{
 		$this->db->exec('DELETE FROM articles WHERE id = '. $_GET['id']);
 	}
 
-	public function delete_all()
+	/**
+	 * Delete all articles
+	 */
+	public function deleteAll()
 	{
 		$result = $this->db->exec('TRUNCATE TABLE articles');
 		return $result;

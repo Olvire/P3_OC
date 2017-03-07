@@ -1,7 +1,5 @@
-
-
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -10,7 +8,7 @@
     <meta name="description" content="">
     <meta name="author" content="Jean Forteroche">
     <link rel="icon" href="">
-    <?php if(isset($_GET['p']) AND $_GET['p'] === 'admin')
+    <?php if(isset($_GET['p']) AND $_GET['p'] === 'admin' AND isset($_GET['menu']) AND $_GET['menu'] == 'write')
     {
       ?> 
       <script src="//cloud.tinymce.com/stable/tinymce.min.js?apiKey=fzxs7q2usg4lvi36shaqwszm97smnt7e6nn7m0lj54uyzyhq"></script>
@@ -30,7 +28,7 @@
     }
     ?>
 
-    <title><?= $page_title; ?></title>
+    <title><?= $pageTitle; ?></title>
 	  <link rel="stylesheet" href="../public/css/font-awesome/css/font-awesome.min.css">
 	  <link rel="stylesheet" href="../public/css/style.css">
     <!-- Bootstrap core CSS -->
@@ -39,11 +37,11 @@
 
   <body>
     <?php 
-      include('../app/navbar.php');
+      include('../inc/navbar.php');
 
       echo $content;
       
-      include('../app/footer.php'); 
+      include('../inc/footer.php'); 
     ?>
 
     <script src="../public/js/jquery-3.1.1.min.js"></script>

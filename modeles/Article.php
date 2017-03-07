@@ -1,18 +1,13 @@
 <?php
 class Article
 {
-	private $erreurs = [];
+	private $errors = [];
 	private $id;
 	private $title;
 	private $content;
 	private $author;
-	private $date_post;
-	private $date_edit;
-	private $nb;
-
-	const AUTEUR_INVALIDE = 1;
-	const TITRE_INVALIDE = 2;
-	const CONTENU_INVALIDE = 3;
+	private $datePost;
+	private $dateEdit;
 
 	public function __construct($value = [])
 	{
@@ -26,7 +21,7 @@ class Article
 	{
 		foreach($data as $key => $value)
 		{
-			$method = 'set_';
+			$method = 'set'.ucfirst($key);
 			if(method_exists([$this, $method]))
 			{
 				$this->$method($value);
@@ -34,7 +29,7 @@ class Article
 		}
 	}
 
-	public function set_id($id)
+	public function setId($id)
 	{
 		if(is_int($id) AND $id > 0)
 		{
@@ -42,95 +37,45 @@ class Article
 		}
 	}
 
-	public function set_title($title)
+	public function setTitle($title)
 	{
-		if(!is_string($title) OR empty($title)) 
-		{
-			$this->erreurs[] = self::TITRE_INVALIDE;
-		}
-		else
-		{
+		if(is_string($title) AND !empty($title)) {
 			$this->title = $title;
 		}
 	}
 
-	public function set_content($content)
+	public function setContent($content)
 	{
-		if(!is_string($content) OR empty($content)) 
-		{
-			$this->erreurs[] = self::CONTENU_INVALIDE;
-		}
-		else
+		if(is_string($content) AND !empty($content)) 
 		{
 			$this->content = $content;
 		}
 	}
 
-	public function set_author($author)
+	public function setAuthor($author)
 	{
-		if(!is_string($author) OR empty($author)) 
-		{
-			$this->erreurs[] = self::TITRE_INVALIDE;
-		} 
-		else 
+		if(is_string($author) AND !empty($author)) 
 		{
 			$this->author = $author;
 		}
 	}
 
-	public function set_date_post(DateTime $date_post)
+	public function setDatePost(DateTime $datePost)
 	{
-		$this->date_post = $date_post;
+		$this->datePost = $datePost;
 	}
 
-	public function set_date_edit(DateTime $date_edit)
+	public function setDateEdit(DateTime $dateEdit)
 	{
-		$this->date_edit = $date_edit;
-	}
-
-	public function set_nb($nb)
-	{
-		$this->nb = $nb;
+		$this->dateEdit = $dateEdit;
 	}
 
 	// GETTERS //
-	public function get_erreurs()
-	{
-		return $this->erreurs;
-	}
-
-	public function get_id()
-	{
-		return $this->id;
-	}
-
-	public function get_title()
-	{
-		return $this->title;
-	}
-
-	public function get_content()
-	{
-		return $this->content;
-	}
-
-	public function get_author()
-	{
-		return $this->author;
-	}
-
-	public function get_date_post()
-	{
-		return $this->date_post;
-	}
-
-	public function get_date_edit()
-	{
-		return $this->date_edit;
-	}
-
-	public function get_nb()
-	{
-		return $this->nb;
-	}
+	public function getErrors() { return $this->errors; }
+	public function getId() { return $this->id; }
+	public function getTitle() { return $this->title; }
+	public function getContent() { return $this->content; }
+	public function getAuthor() { return $this->author; }
+	public function getDatePost() { return $this->datePost; }
+	public function getDateEdit() { return $this->dateEdit;}
 }

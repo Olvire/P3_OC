@@ -2,18 +2,19 @@
 
 class ViewAdmin
 {
-	private $listOfArticles;
-	private $lastArticles;
-	private $selectedTab;
-	private $article;
-	private $signaledComments;
-	private $totalArticles;
-	private $totalComments;
-	private $listOfComments;
-	private $lastComments;
-	private $totalSignaledComments;
+	private $listOfArticles,
+			$lastArticles,
+			$selectedTab,
+			$article,
+			$signaledComments,
+			$totalArticles,
+			$totalComments,
+			$listOfComments,
+			$lastComments,
+			$totalSignaledComments,
+			$aboutDescription;
 
-	public function __construct($listOfArticles, $lastArticles, $selectedTab, $article, $signaledComments, $totalArticles, $totalComments, $listOfComments, $lastComments, $totalSignaledComments) {
+	public function __construct($listOfArticles, $lastArticles, $selectedTab, $article, $signaledComments, $totalArticles, $totalComments, $listOfComments, $lastComments, $totalSignaledComments, $aboutDescription) {
 		$this->listOfArticles = $listOfArticles;
 		$this->lastArticles = $lastArticles;
 		$this->selectedTab = $selectedTab;
@@ -24,9 +25,10 @@ class ViewAdmin
 		$this->listOfComments = $listOfComments;
 		$this->lastComments = $lastComments;
 		$this->totalSignaledComments = $totalSignaledComments;
+		$this->aboutDescription = $aboutDescription;
 	}
 
-	public function display() {	
+	public function display() {
 		?>
 		<div class="admin-container">
 			<div class="container">
@@ -35,6 +37,9 @@ class ViewAdmin
 			// Si les variables de session ne sont pas créées, on affiche la page de connexion.
 			if(!isset($_SESSION['username']) AND !isset($_SESSION['password'])) {
 				include('../inc/admin/login.php');
+			}
+			elseif(isset($_SESSION['username']) AND $_SESSION['username'] !== 'Jean') {
+				echo '<p>Désolé, vous n\'êtes pas autorisé à administrer ce blog.</p>';
 			}
 			// Sinon, on affiche les différents éléments composant l'espace d'administration.
 			else {
@@ -64,6 +69,11 @@ class ViewAdmin
 				// La liste des commentaires.
 				elseif($this->selectedTab == 'comments') {
 					include('../inc/admin/comments.php');
+				}
+
+				// La liste des utilisateurs.
+				elseif($this->selectedTab == 'users') {
+					include('../inc/admin/users.php');
 				}
 
 				// Les réglages

@@ -10,7 +10,7 @@ foreach($this->listOfArticles as $article) {
 			<h4><?= htmlspecialchars($article->getTitle()); ?></h4>
 			<p>
 				<small>
-				Cet article a été rédigé le <?= $article->getDatePost()->format('d/m/Y à H:i:s'); ?>
+				Rédigé le <?= $article->getDatePost()->format('d/m/Y à H:i:s'); ?>
 				<?php if($article->getDateEdit()->format('d/m/Y') !== '30/11/-0001') {
 					echo ' et modifié le ' . $article->getDateEdit()->format('d/m/Y');
 				}

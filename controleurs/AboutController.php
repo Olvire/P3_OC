@@ -1,7 +1,9 @@
 <?php
 class AboutController extends Controller {
 	public function execute() {
-		$viewAbout = new ViewAbout();
+		$aboutDescription = $this->aboutManager->getDescription();
+
+		$viewAbout = new ViewAbout($aboutDescription);
 		$viewAbout->display();
 	}
 }

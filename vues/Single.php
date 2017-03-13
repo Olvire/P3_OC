@@ -53,11 +53,17 @@ class ViewSingle
 							<div class="comment-header">
 								<p>	
 									<strong><?= htmlspecialchars($comment->getAuthor()); ?></strong>
-									<small>Le <?= $comment->getDatePost()->format('d/m/y à H:i:s'); ?>
-									<a href="">Répondre</a></small>
-									
+									<small>Le <?= $comment->getDatePost()->format('d/m/y à H:i:s'); ?></small>
+									<?php
+									if(empty($comment->getSignaler())) {
+									?>
+									<a href="index.php?p=single&amp;id=<?= $this->articleUnique->getId(); ?>&amp;action=signal&amp;commentId=<?= $comment->getId(); ?>"><small class="signal pull-right">Signaler</small></a>
+									<?php
+									} else {
+										echo '<small class="text-danger">Le commentaire a été signalé et est en attente de modération.</small>';
+									}
+									?>
 								</p>
-
 							</div>
 							<div class="comment-content">
 								<p><?= htmlspecialchars($comment->getContent()); ?></p>
@@ -72,6 +78,15 @@ class ViewSingle
 									<p>
 										<strong><?= htmlspecialchars($subComment->getAuthor()); ?></strong>
 										<small>Le <?= $subComment->getDatePost()->format('d/m/y H:i:s'); ?></small>
+										<?php
+										if(empty($subComment->getSignaler())) {
+										?>
+										<a href="index.php?p=single&amp;id=<?= $this->articleUnique->getId(); ?>&amp;action=signal&amp;commentId=<?= $subComment->getId(); ?>"><small class="signal pull-right">Signaler</small></a>
+										<?php
+										} else {
+											echo '<small class="text-danger">Le commentaire a été signalé et est en attente de modération.</small>';
+										}
+										?>
 									</p>
 								</div>
 								<div class="comment-content">
@@ -87,13 +102,25 @@ class ViewSingle
 										<p>
 											<strong><?= htmlspecialchars($subSubComment->getAuthor()); ?></strong>
 											<small>Le <?= $subSubComment->getDatePost()->format('d/m/y H:i:s'); ?></small>
+											<?php
+											if(empty($subSubComment->getSignaler())) {
+											?>
+											<a href="index.php?p=single&amp;id=<?= $this->articleUnique->getId(); ?>&amp;action=signal&amp;commentId=<?= $subSubComment->getId(); ?>"><small class="signal pull-right">Signaler</small></a>
+											<?php
+											} else {
+												echo '<small class="text-danger">Le commentaire a été signalé et est en attente de modération.</small>';
+											}
+											?>
 										</p>
 									</div>
 
 									<div class="comment-content">
 										<p><?= htmlspecialchars($subSubComment->getContent()); ?></p>
 									</div>
+									
+									<span title="Répondre" class="repondre-commentaire"><small>Répondre</small></span>
 
+									<!-- Répondre au commentaire de 3è niveau -->
 									<div class="comment-footer">
 										<form action="index.php?p=single&amp;id=<?= $this->articleUnique->getId(); ?>#comments" method="post">
 											<?php
@@ -112,6 +139,9 @@ class ViewSingle
 								<?php
 								}
 								?>
+
+								<span title="Répondre" class="repondre-commentaire"><small>Répondre</small></span>
+								<!-- Répondre au commentaire de 2è niveau -->
 								<div class="comment-footer">
 									<form action="index.php?p=single&amp;id=<?= $this->articleUnique->getId(); ?>#comments" method="post">
 										<?php
@@ -130,7 +160,10 @@ class ViewSingle
 							<?php	
 							}
 							?>
+							
+							<span title="Répondre" class="repondre-commentaire"><small>Répondre</small></span>
 
+							<!-- Répondre au commentaire de 1er niveau -->
 							<div class="comment-footer">
 								<?php
 								?>

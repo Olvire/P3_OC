@@ -15,7 +15,6 @@ if(!isset($_GET['action'])) {
 }
 
 ?>
-
 <form action="" method="post">
 	<div class="form-group">
 		<label for="title">Titre </label>

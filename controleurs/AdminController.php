@@ -4,6 +4,8 @@ class AdminController extends Controller {
 		
 		$selectedTab = 'dashboard';
 
+		$article = null;	
+
 		// GESTION DES ONGLETS DANS L'ESPACE D'ADMINISTRATION //
 		if(isset($_GET['menu'])) {
 			$selectedTab = $_GET['menu'];
@@ -56,11 +58,18 @@ class AdminController extends Controller {
 			}
 		}
 
+		// Personnalisation page 'About.php'
+		if(isset($_POST['about'])) {
+			$about = new About();
+			$about->setDescription($_POST['about']);
+			$this->aboutManager->add($about);
+		}
+
 		// Liés aux articles
 		$listOfArticles = $this->articleManager->getList();
 		$lastArticles = $this->articleManager->getLastArticles();
 		$totalArticles = $this->articleManager->count();
-		$article = null;	
+
 		// Liés aux commentaires
 		$listOfComments = $this->commentManager->getAllComments();
 		$lastComments = $this->commentManager->getLastComments();
@@ -68,8 +77,11 @@ class AdminController extends Controller {
 		$signaledComments = $this->commentManager->getSignaledComments();
 		$totalSignaledComments = $this->commentManager->countSignaledComments();
 
+		// Lié à la page About.php
+		$aboutDescription = $this->aboutManager->getDescription();
+		
 		// TRANSMISSION DES INFORMATIONS À LA VUE //
-		$viewAdmin = new ViewAdmin($listOfArticles, $lastArticles, $selectedTab, $article, $signaledComments, $totalArticles, $totalComments, $listOfComments, $lastComments, $totalSignaledComments);
+		$viewAdmin = new ViewAdmin($listOfArticles, $lastArticles, $selectedTab, $article, $signaledComments, $totalArticles, $totalComments, $listOfComments, $lastComments, $totalSignaledComments, $aboutDescription);
 		$viewAdmin->display();
 	}
 }

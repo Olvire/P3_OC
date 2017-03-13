@@ -9,14 +9,29 @@
 				<?php
 				echo '<div class="dashboard-numbers">';
 				echo '<h4>Quelques chiffres</h4>';
-				echo '<p>Articles postés : <span class="text-success">' . $this->totalArticles . '</span><br>';
-				echo 'Commentaires publiés : <span class="text-success">' . $this->totalComments . '</span><br>';
-				echo 'Commentaires signalés : ';
-				
-				if($this->totalSignaledComments !== 0) {
-					echo '<span class="text-danger">' . $this->totalSignaledComments . '</span>';
+
+				// Nombre d'articles postés
+				echo '<p>Articles postés : ';
+				if($this->totalArticles !== 0) {
+					echo '<span class="text-success">' . $this->totalArticles . '</span><br>';
 				} else {
-					echo $this->totalSignaledComments;
+					echo $this->totalArticles . '<br>';
+				}
+
+				// Nombre de commentaires publiés
+				echo 'Commentaires publiés : ';
+				if($this->totalComments !== 0) {
+					echo '<span class="text-success">' . $this->totalComments . '</span><br>';
+				} else {
+					echo $this->totalComments . '<br>';
+				}
+				
+				// Nombre de commentaires signalés
+				echo 'Commentaires signalés : ';
+				if($this->totalSignaledComments !== 0) {
+					echo '<span class="text-danger">' . $this->totalSignaledComments . '</span><br>';
+				} else {
+					echo $this->totalSignaledComments . '<br>';
 				}
 
 				echo '</p>';
@@ -35,7 +50,6 @@
 					echo '<small>Publié le ' . $article->getDatePost()->format('d/m/Y') . '</small><br>';
 					echo substr($article->getContent(), 0, 300) . '<br>';
 					echo '</article>';
-					echo '<hr>';
 				}
 				?>
 			</div>

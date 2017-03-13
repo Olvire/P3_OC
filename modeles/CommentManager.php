@@ -113,7 +113,7 @@ class CommentManager
 
 	// Méthode récursive privée
 	private function getCommentsChildren(Comment $comment) {
-		$request = $this->db->prepare('SELECT * FROM comments WHERE parentId = :parentId ORDER BY datePost DESC');
+		$request = $this->db->prepare('SELECT * FROM comments WHERE parentId = :parentId ORDER BY datePost');
 		$request->bindValue(':parentId', $comment->getId());
 
 		$request->execute();

@@ -9,13 +9,13 @@ require '../controleurs/SingleController.php';
 require '../controleurs/ErrorController.php';
 require '../controleurs/AboutController.php';
 require '../controleurs/MentionsController.php';
-require '../controleurs/LoginController.php';
+require '../controleurs/ProfileController.php';
 require '../modeles/Article.php';
 require '../modeles/ArticleManager.php';
 require '../modeles/Comment.php';
 require '../modeles/CommentManager.php';
-require '../modeles/User.php';
-require '../modeles/UserManager.php';
+require '../modeles/About.php';
+require '../modeles/AboutManager.php';
 require '../vues/AdminForm.php';
 require '../vues/LoginForm.php';
 require '../vues/Home.php';
@@ -24,7 +24,7 @@ require '../vues/Admin.php';
 require '../vues/Erreur.php';
 require '../vues/About.php';
 require '../vues/Mentions.php';
-require '../vues/Login.php';
+require '../vues/Profile.php';
 
 $pageTitle = 'Jean Forteroche';
 
@@ -56,9 +56,18 @@ if($p === 'home') {
 	$controller = new MentionsController();
 	$controller->execute();
 } elseif($p === 'login') {
-	$pageTitle .= ' - Connexion';
-	$controller = new LoginController();
+	if(!isset($_SESSION['username'])) {
+		$pageTitle .= ' - Connexion';
+		$controller = new LoginController();
+		$controller->execute();
+	} else {
+		header('Location: index.php');
+	}
+} elseif(isset($_SESSION['username']) AND $p === 'profile') {
+	$pageTitle .= ' - Mon profil';
+	$controller = new ProfileController();
 	$controller->execute();
+
 } else {
 	$controller = new ErrorController();
 	$controller->execute();

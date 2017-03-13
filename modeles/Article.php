@@ -1,7 +1,6 @@
 <?php
 class Article
 {
-	private $errors = [];
 	private $id;
 	private $title;
 	private $content;

@@ -26,7 +26,8 @@ p { line-height: 25px; }
 .error-container,
 .about-container,
 .mentions-container,
-.login-container {
+.login-container,
+.profile-container {
 	flex: 1 1 0;
 }
 
@@ -42,14 +43,34 @@ p { line-height: 25px; }
 .admin-container article h4 { margin: 0; }
 
 .dashboard-left,
-.dashboard-right {
+.dashboard-right,
+.signaled-comments {
 	border: 1px solid #d8d8d8;
+}
+
+.dashboard-right article {
+	padding: 10px 0;
 }
 
 @media (max-width: 992px) {
 	.dashboard-left {
 		margin-bottom: 20px;
 	}
+}
+
+.signaled-comments {
+	padding: 10px 15px;
+	margin-top: 20px;
+}
+
+.about-description-form {
+	display: none;
+}
+
+.admin-about-description {
+	background-color: #f8f8f8;
+	border: 1px solid #d8d8d8;
+	padding: 5px;
 }
 
 /* Home Page */
@@ -64,11 +85,20 @@ p { line-height: 25px; }
 	height: 400px;
 }
 
+@media (max-width: 768px) {
+	.home-pic-top {
+		background-position: right;
+		height: 200px;
+	}
+}
+
 .home-container article {
 	margin-bottom: 20px;
 }
 
 .home-container article header p { color: #606060; }
+
+.home-container article header { border: 1px solid #233;}
 
 .date-comments {
 	color: grey;
@@ -105,15 +135,15 @@ p { line-height: 25px; }
 .article-unique-header h1 {
 	color: #79a594;
 	font-family: 'Oswald', sans-serif;
-	font-size: 9em;
+	font-size: 5em;
 	font-weight: 600;
-	line-height: 1em;
+	line-height: 1.5em;
 	text-transform: uppercase;
 }
 
 @media (max-width: 768px) {
 	.article-unique-header h1 {
-		font-size: 4em;
+		font-size: 3em;
 	}
 }
 
@@ -139,10 +169,9 @@ p { line-height: 25px; }
 }
 
 .comment-footer textarea {
-	background-color: inherit;
-	height: 2em;
 	margin-top: 5px;
 	margin-bottom: 10px;
+	padding: 5px;
 	resize: none;
 	width: 100%;
 }
@@ -166,10 +195,35 @@ p { line-height: 25px; }
 }
 
 .subSubComment {
-	background-color: rgba(121, 165, 148, .4);
+	background-color: rgba(121, 165, 148, .3);
 	border-radius: 10px;
 	margin: 0 0 10px 25px;
 	padding: 10px;
+}
+
+.repondre-commentaire {
+	cursor: pointer;
+}
+
+.repondre-commentaire:hover {
+	text-decoration: underline;
+}
+
+.signal {
+	font-size: .7em;
+}
+
+/* profile */
+.profile-picture {
+	width: 100%;
+}
+
+@media (max-width: 992px) {
+	.profile-picture {
+		display: block;
+		width: 300px;
+		margin: 0 auto;
+	}
 }
 
 /* Footer */

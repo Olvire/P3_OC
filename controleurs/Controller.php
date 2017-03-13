@@ -3,6 +3,7 @@ class Controller
 {
 	protected $articleManager;
 	protected $commentManager;
+	protected $aboutManager;
 	private $db_host;
 	private $db_name;
 	private $db_user;
@@ -16,7 +17,7 @@ class Controller
 		$db = new PDO('mysql:host=' . $this->db_host . ';dbname=' . $this->db_name . ';charset=utf8', $this->db_user, $this->db_pass, array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
 		$this->articleManager = new ArticleManager($db);
 		$this->commentManager = new CommentManager($db);
-		$this->userManager = new UserManager($db);
+		$this->aboutManager = new AboutManager($db);
 	}
 
 }

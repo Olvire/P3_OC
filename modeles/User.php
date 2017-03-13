@@ -4,6 +4,7 @@ class User {
 	private $username;
 	private $password;
 	private $email;
+	private $role;
 	private $dateInscription;
 
 	public function __construct($values = []) {
@@ -47,11 +48,22 @@ class User {
 		}
 	}
 
+	public function setRole($role) {
+		if(is_string($role)) {
+			$this->role = $role;
+		}
+	}
+
+	public function setDateInscription($dateInscription) {
+		$this->dateInscription = $dateInscription;
+	}
+
 	// GETTERS //
 	public function getErrors() { return $this->errors; }
 	public function getId() { return $this->id; }
 	public function getUsername() { return $this->username; }
 	public function getPassword() { return $this->password; }
 	public function getEmail() { return $this->email; }
+	public function getRole() { return $this->role; }
 	public function getDateInscription() { return $this->dateInscription; }
 }

@@ -9,14 +9,17 @@ class UserManager {
 	}
 
 	public function addUser(User $user) {
-		$req = $this->db->prepare('INSERT INTO users(username, password, email, date_inscription) VALUES(:username, :password, :email, NOW()');
+		$req = $this->db->prepare('INSERT INTO users(username, password, email, role, date_inscription) VALUES(:username, :password, :email, :role, NOW())');
 		$req->bindValue(':username', $user->getUsername());
 		$req->bindValue(':password', $user->getPassword());
 		$req->bindValue(':email', $user->getEmail());
+		$req->bindValue(':role', $user->getRole());
 
 		$req->execute();
-
-		$result = $req->fetch();
 	}
-	
+
+	public function count() {
+		$result = $this->db->query('SELECT * FROM users')->fetchColumn();
+		return $result;
+	}
 }

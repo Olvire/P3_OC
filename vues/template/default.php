@@ -8,13 +8,36 @@
     <meta name="description" content="">
     <meta name="author" content="Jean Forteroche">
     <link rel="icon" href="">
-    <?php if(isset($_GET['p']) AND $_GET['p'] === 'admin' AND isset($_GET['menu']) AND $_GET['menu'] == 'write')
+
+    <title><?= $pageTitle; ?></title>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="../public/css/bootstrap.min.css">
+	  <link rel="stylesheet" href="../public/css/font-awesome/css/font-awesome.min.css">
+	  <link rel="stylesheet" href="../public/css/style.css">
+  </head>
+
+  <body>
+    <?php 
+      include('../inc/navbar.php');
+
+      echo $content;
+      
+      include('../inc/footer.php'); 
+    ?>
+    
+    <!-- My JS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <!-- Bootstrap JS -->
+    <script src="../public/js/bootstrap.min.js"></script>
+
+    <?php if(isset($_GET['p']) AND $_GET['p'] === 'admin' AND isset($_GET['menu']) AND $_GET['menu'] == 'write' OR isset($_GET['menu']) AND $_GET['menu'] == 'settings')
     {
-      ?> 
+      // TinyMCE
+      ?>
       <script src="//cloud.tinymce.com/stable/tinymce.min.js?apiKey=fzxs7q2usg4lvi36shaqwszm97smnt7e6nn7m0lj54uyzyhq"></script>
       <script>tinymce.init({
               selector: 'textarea',
-              height: 200,
+              height: 100,
               menubar: false,
               plugins: [
                 'advlist autolink lists link image charmap print preview anchor',
@@ -27,25 +50,6 @@
       <?php
     }
     ?>
-
-    <title><?= $pageTitle; ?></title>
-	  <link rel="stylesheet" href="../public/css/font-awesome/css/font-awesome.min.css">
-	  <link rel="stylesheet" href="../public/css/style.css">
-    <!-- Bootstrap core CSS -->
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
-  </head>
-
-  <body>
-    <?php 
-      include('../inc/navbar.php');
-
-      echo $content;
-      
-      include('../inc/footer.php'); 
-    ?>
-
-    <script src="../public/js/jquery-3.1.1.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-    <script type="text/javascript" src="../public/js/script.js"></script>
+    <script src="../public/js/script.js"></script>
   </body>
 </html>

@@ -34,7 +34,7 @@ class ViewHome
 									<p class="date-comments">
 										<small>
 											<i class="fa fa-clock-o" aria-hidden="true"></i>
-											<?= $article->getDatePost()->format("d/m/y"); ?> |
+											<?= $article->getDatePost()->format("d/m/Y"); ?> | <?= $article->getAuthor(); ?>
 										</small>
 									</p>
 								</section>

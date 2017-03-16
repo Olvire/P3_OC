@@ -1,9 +1,15 @@
 <?php
-
+/**
+ * Classe pour la vue Mentions (légales)
+ */
 class ViewMentions {
+
+	/**
+	 * Se charge d'afficher le contenu de la vue.
+	 */
 	public function display() {
 		?>
-
+		
 		<div class="mentions-container">
 			<div class="container">
 				<h2>Informations légales</h2>

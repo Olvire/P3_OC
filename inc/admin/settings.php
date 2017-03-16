@@ -8,10 +8,17 @@
 	<p class="text-justify">Entrez une description de votre blog, fournissez des informations de contact et ce qui vous paraîtra important. Cela apparaitra dans la page &laquo; À propos &raquo; de votre site.</p>
 
 	<form action="" method="post">
-		<textarea name="about-description" class="form-control"></textarea><br>
+		<textarea name="aboutDescription" class="form-control">
+			<?php
+			if(!empty($this->aboutDescription)) {
+				echo $this->aboutDescription;
+			}
+			?>
+		</textarea><br>
 		<input type="submit" class="btn btn-default btn-sm" value="Mettre à jour">
+		<a class="btn btn-default btn-sm" href="index.php?p=admin&amp;menu=settings&amp;action=deleteDescription">Supprimer la description</a>
 	</form>
-
+	
 	<br>
 
 	<h4>Vos articles</h4>

@@ -1,16 +1,25 @@
 <?php
+/**
+ * Classe servant de Manager à la classe Article
+ */
 class ArticleManager
-{
+{	
+
+	// Attribut nécessaire à la connexion avec la base de données.
 	private $db;
 
+	/**
+	 * Permet de se connecter à la base de données dès l'instanciation de l'objet.
+	 * @param PDO Object $db La base de données
+	 */
 	public function __construct($db)
 	{
 		$this->db = $db;
 	}
 
 	/**
-	 * Counts the number of articles in the database
-	 * @return int The number of articles
+	 * Compte le nombre d'articles dans la base de données.
+	 * @return int Le nombre d'articles
 	 */
 	public function count()
 	{
@@ -19,8 +28,8 @@ class ArticleManager
 	}
 
 	/**
-	 * Add an article into the database
-	 * @param Article $article The article (object)
+	 * Ajoute un article dans la base de données.
+	 * @param Article $article L'article (object)
 	 */
 	public function add(Article $article)
 	{
@@ -33,11 +42,11 @@ class ArticleManager
 	}
 
 	/**
-	 * Updates articles values
-	 * @param string $title The articles title
-	 * @param string $author The articles author
-	 * @param string $content The articles content
-	 * @param int $id The aticles identifier
+	 * Met à jour les valeurs d'un article.
+	 * @param string $title Le titre
+	 * @param string $author L'auteur
+	 * @param string $content Le contenu
+	 * @param int $id L'id
 	 */
 	public function update($title, $author, $content, $id)
 	{
@@ -50,16 +59,16 @@ class ArticleManager
 	}
 
 	/**
-	 * Gets the list of articles.
-	 * @param int $firstArticle The first article
-	 * @param int $articlesPerPage The number of articles per page
-	 * @return The list.
+	 * Obtient la liste des articles.
+	 * @param int $firstArticle Le premier article
+	 * @param int $articlesPerPage Le nombre d'articles par page
+	 * @return Article objects La liste
 	 */
 	public function getList($firstArticle = -1, $articlesPerPage = -1) 
 	{
 		$sql = 'SELECT * FROM articles ORDER BY datePost DESC';
 		
-		// Cheching the integrity of the given data
+		// Vérification de la validité des données reçues.
 		if($firstArticle != -1 OR $articlesPerPage != -1)
 		{
 			$sql .= ' LIMIT ' . (int) $articlesPerPage . ' OFFSET ' . (int) $firstArticle;
@@ -70,7 +79,7 @@ class ArticleManager
 
 		$listOfArticles = $request->fetchAll();
 
-		// Loop on the articles list in order to put DateTime as datePost and dateEdit.
+		// On boucle sur la liste d'articles afin d'instancier des objets DateTime pour datePost et dateEdit.
 		foreach($listOfArticles as $article)
 		{
 			$article->setDatePost(new DateTime($article->getDatePost()));
@@ -82,6 +91,10 @@ class ArticleManager
 		return $listOfArticles;
 	}
 
+	/**
+	 * Obtient la liste des 3 derniers articles.
+	 * @return Article Objects Les 3 derniers articles
+	 */
 	public function getLastArticles() {
 		$result = $this->db->query('SELECT * FROM articles ORDER BY datePost DESC LIMIT 0, 3');
 		$lastArticles = $result->fetchAll(PDO::FETCH_CLASS, 'Article');
@@ -95,9 +108,9 @@ class ArticleManager
 	}
 
 	/**
-	 * Gets a unique article (for single page).
-	 * @param int $id The identifier of the article
-	 * @return The article.
+	 * Obtient un article unique (pour la vue Single)
+	 * @param int $id L'id de l'article
+	 * @return Article Object L'article.
 	 */
 	public function getUnique($id)
 	{
@@ -112,7 +125,7 @@ class ArticleManager
 	}
 
 	/**
-	 * Delete an article
+	 * Supprimer un article de la base de données.
 	 */
 	public function deleteArticle()
 	{
@@ -120,7 +133,7 @@ class ArticleManager
 	}
 
 	/**
-	 * Delete all articles
+	 * Supprime tous les articles de la base de données. Remet l'id de base à 0.
 	 */
 	public function deleteAll()
 	{

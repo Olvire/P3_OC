@@ -213,16 +213,30 @@ p { line-height: 25px; }
 	font-size: .7em;
 }
 
+/* Login */
+.login-form {
+	border: 1px solid #d8d8d8;
+	border-radius: 20px;
+	padding: 25px 20px;
+}
+
+.img-login {
+	height: 200px;
+	width: 200px;
+	margin: 0 auto;
+}
+
 /* profile */
 .profile-picture {
-	width: 100%;
+	display: block;
+	width: 200px;
+	margin: 40px auto 20px auto;
 }
 
 @media (max-width: 992px) {
 	.profile-picture {
 		display: block;
 		width: 300px;
-		margin: 0 auto;
 	}
 }
 

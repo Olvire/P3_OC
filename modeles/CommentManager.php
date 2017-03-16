@@ -1,16 +1,24 @@
 <?php
-
+/**
+ * Classe servant de Manager à la classe Comment.
+ */
 class CommentManager
-{
+{	
+
+	// Attribut nécessaire à la connexion avec la base de données.
 	private $db;
 
+	/**
+	 * Permet de se connecter à la base de données dès l'instanciation de l'objet.
+	 * @param PDO Object $db La base de données
+	 */
 	public function __construct($db) {
 		$this->db = $db;
 	}
 
 	/**
-	 * Add a comment
-	 * @param Comment $comment The comment
+	 * Ajoute un commentaire en base de données.
+	 * @param Comment $comment Le commentaire
 	 */
 	public function add(Comment $comment) {
 		$req = $this->db->prepare('INSERT INTO comments (articleId, parentId, author, content, datePost) VALUES(:articleId, :parentId, :author, :content, NOW())');
@@ -23,8 +31,8 @@ class CommentManager
 	}
 
 	/**
-	 * Gets the total count of comments.
-	 * @return int The total count.
+	 * Obtient le nombre total de commentaires.
+	 * @return int Total.
 	 */
 	public function getTotalCount() {
 		$result = $this->db->query('SELECT COUNT(*) FROM comments')->fetchColumn();
@@ -32,9 +40,9 @@ class CommentManager
 	}
 
 	/**
-	 * Gets the number of comments on a specific article.
-	 * @param int $articleId The article identifier
-	 * @return int The number of comments on this article
+	 * Obtient le nombre de commentaires sur un article spécifique.
+	 * @param int $articleId L'id de l'article
+	 * @return int Le nombre de commentaires sur cet article
 	 */
 	public function count($articleId) {
 		$request = $this->db->prepare('SELECT COUNT(*) FROM comments WHERE articleId = :articleId');
@@ -45,9 +53,9 @@ class CommentManager
 	}
 
 	/**
-	 * Gets a specific comment.
-	 * @param int $id The identifier
-	 * @return The specific comment.
+	 * Obtient un commentaire spécifique.
+	 * @param int $id L'id du commentaire
+	 * @return Comment Object Le commentaire.
 	 */
 	public function getSpecificComment($id) {
 		$request = $this->db->prepare('SELECT * FROM comments WHERE id = :id');
@@ -63,8 +71,8 @@ class CommentManager
 	}
 
 	/**
-	 * Gets all comments.
-	 * @return All comments.
+	 * Obtient tous les commentaires, triés par id d'article et date de publication.
+	 * @return Comment objects Les commentaires.
 	 */
 	public function getAllComments() {
 		$result = $this->db->query('SELECT * FROM comments ORDER BY articleId, datePost');
@@ -77,6 +85,10 @@ class CommentManager
 		return $listComments;
 	}
 
+	/**
+	 * Obtient les 5 derniers commentaires, triés par date de publication.
+	 * @return Comment objects Les derniers commentaires.
+	 */
 	public function getLastComments() {
 		$result = $this->db->query('SELECT * FROM comments ORDER BY datePost LIMIT 0, 5');
 		$lastComments = $result->fetchAll(PDO::FETCH_CLASS, "Comment");
@@ -89,9 +101,9 @@ class CommentManager
 	}
 
 	/**
-	 * Gets the comments on a specific article.
-	 * @param id $articleId  The article identifier
-	 * @return object The comments.
+	 * Obtient les commentaires d'un article spécifique, triés par date de publication dans l'ordre décroissant.
+	 * @param id $articleId L'id de l'article
+	 * @return Comment Objects Les commentaires.
 	 */
 	public function getComments($articleId) {
 		$request = $this->db->prepare('SELECT * FROM comments WHERE parentId = 0 AND articleId = :articleId ORDER BY datePost DESC');
@@ -101,6 +113,7 @@ class CommentManager
 
 		$listComments = $request->fetchAll(PDO::FETCH_CLASS, "Comment");
 
+		// On boucle pour obtenir les commentaires enfants et leur assigner une date de publication formatable (DateTime Object).
 		foreach($listComments as $comment) {
 			$this->getCommentsChildren($comment);
 			$comment->setDatePost(new DateTime($comment->getDatePost()));

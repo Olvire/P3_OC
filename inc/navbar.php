@@ -19,17 +19,9 @@
         <li <?php if(isset($_GET['p']) AND $_GET['p'] == 'about') echo 'class="active"'; ?>><a href="index.php?p=about">À propos</a></li>
 
         <?php if(!isset($_SESSION['username'])) { ?>
-        <li><a href="index.php?p=admin">Connexion</a></li>
+        <li><a href="index.php?p=login">Connexion</a></li>
         <?php } else { ?>
-        <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><?= $_SESSION['username']; ?> <span class="caret"></span></a>
-          <ul class="dropdown-menu">
-            <li><a href="index.php?p=profile">Mon profil</a></li>
-            <?php if($_SESSION['username'] == 'Jean') echo '<li><a href="index.php?p=admin">Administration</a></li>'; ?>
-            <li role="separator" class="divider"></li>
-            <li><a href="../inc/logout.php">Déconnexion</a></li>
-          </ul>
-        </li>
+        <li><a href="../inc/logout.php">Déconnexion</a></li>
         <?php } ?>
       </ul>
     </div>

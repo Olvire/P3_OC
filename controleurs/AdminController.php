@@ -11,12 +11,6 @@ class AdminController extends Controller {
 			$selectedTab = $_GET['menu'];
 		}
 
-		// CRÉATION DES VARIABLES DE SESSION SI LE FORMULAIRE DE CONNEXION A ÉTÉ PRÉALABLEMENT REMPLI //
-		if(isset($_POST['username']) AND $_POST['username'] == 'Jean' AND isset($_POST['password']) AND $_POST['password'] == '1234') {
-		    $_SESSION['username'] = $_POST['username'];
-		    $_SESSION['password'] = $_POST['password'];
-		}
-
 		// AJOUT ET MISE À JOUR D'UN ARTICLE EN BASE DE DONNÉES //
 		if(!empty($_POST['title']) AND !empty($_POST['author']) AND !empty($_POST['content'])) {
 			$title = $_POST['title'];
@@ -42,6 +36,7 @@ class AdminController extends Controller {
 				$this->articleManager->deleteArticle();
 			} elseif($_GET['action'] == 'truncate') {
 				$this->articleManager->deleteAll();
+				$this->commentManager->deleteAll();
 			} elseif($_GET['action'] == 'edit') {
 				$article = $this->articleManager->getUnique($_GET['id']);
 			}
@@ -59,10 +54,17 @@ class AdminController extends Controller {
 		}
 
 		// Personnalisation page 'About.php'
-		if(isset($_POST['about'])) {
-			$about = new About();
-			$about->setDescription($_POST['about']);
-			$this->aboutManager->add($about);
+		if(isset($_POST['aboutDescription'])) {
+			if(empty($this->aboutManager->getDescription())) {
+				$about = new About();
+				$about->setDescription($_POST['aboutDescription']);
+				$this->aboutManager->add($about);
+			} else {
+				$this->aboutManager->update($_POST['aboutDescription'], 1);
+			}
+		}
+		if(isset($_GET['action']) AND $_GET['action'] == 'deleteDescription') {
+			$this->aboutManager->deleteDescription();
 		}
 
 		// Liés aux articles

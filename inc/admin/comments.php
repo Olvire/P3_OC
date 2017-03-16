@@ -3,8 +3,11 @@
 </div>
 
 <?php
+// Si aucun commentaire n'a été publié sur le blog, on affiche un message.
 if(empty($this->listOfComments)) {
 	echo '<p>Aucun commentaire n\'a été posté pour le moment.</p>';
+
+// Sinon, on les affiche dans un tableau.
 } else { ?>
 	<table class="table">
 		<thead>
@@ -37,7 +40,8 @@ if(empty($this->listOfComments)) {
 			?>
 		</tbody>
 	</table>
-
+	
+	<!-- Affichages des commentaires signalés. -->
 	<div class="col-xs-12 signaled-comments">
 		<h4>Commentaires signalés</h4>
 

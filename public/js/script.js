@@ -3,7 +3,4 @@ $(function() {
 	$('.repondre-commentaire').on('click', function() {
 		$(this).siblings('.comment-footer').fadeToggle();
 	});
-
-	// Permet de faire apparaître la textarea pour publier sur la page À propos.
-	
 });

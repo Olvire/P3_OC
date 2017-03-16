@@ -1,7 +1,11 @@
 <?php
 
+/**
+ * Classe pour la vue Single
+ */
 class ViewSingle
 {
+	// Attributs nécessaires à la vue.
 	private $articleUnique;
 	private $listOfComments;
 	private $numberOfComments;
@@ -15,6 +19,9 @@ class ViewSingle
 		$this->lastArticles = $lastArticles;
 	}
 
+	/**
+	 * Se charge d'afficher le contenu de la vue.
+	 */
 	public function display()
 	{
 		?>
@@ -22,19 +29,27 @@ class ViewSingle
 		<div class="single-container">
 			<div class="container">
 				<div class="row">
-					<!-- ARTICLE UNIQUE -->
+
+					<!-- Début de l'article unique -->
 					<article class="col-md-8">
 						<div class="article-unique-header">
 							<h1><?= htmlspecialchars($this->articleUnique->getTitle()); ?></h1>
 							<p class="date-post">
+
 								Publié le <?= $this->articleUnique->getDatePost()->format('d/m/Y') ?>
+
 								<?php
-							if($this->articleUnique->getDateEdit()->format('d/m/Y') !== '30/11/-0001') {
-								echo '| Cet article a été édité le ' . $this->articleUnique->getDateEdit()->format('d/m/Y à H:i:s');
-							}
-							if(isset($_SESSION['username'])) { 
-								echo '<small><a class="btn btn-default btn-xs" href="index.php?p=admin&amp;menu=write&amp;action=edit&amp;id='.$this->articleUnique->getId().'">Éditer</a></small>'; 
-							} ?>
+								// Affichage de la date formatée de publication de l'article.
+								if($this->articleUnique->getDateEdit()->format('d/m/Y') !== '30/11/-0001') {
+									echo '| Cet article a été édité le ' . $this->articleUnique->getDateEdit()->format('d/m/Y à H:i:s') . ' ';
+								}
+
+								// Si la session est ouverte au nom de Jean, on donne la possibilité d'éditer l'article.
+								if(isset($_SESSION['username']) AND $_SESSION['username'] == 'Jean') { 
+									echo '<small><a class="btn btn-default btn-xs" href="index.php?p=admin&amp;menu=write&amp;action=edit&amp;id=' . $this->articleUnique->getId() . '">Éditer</a></small>'; 
+								}
+								?>
+
 							</p>
 						</div>
 						
@@ -52,19 +67,21 @@ class ViewSingle
 						<div class="comment">
 							<div class="comment-header">
 								<p>	
-									<strong><?= htmlspecialchars($comment->getAuthor()); ?></strong>
-									<small>Le <?= $comment->getDatePost()->format('d/m/y à H:i:s'); ?></small>
+									<strong><?= htmlspecialchars($comment->getAuthor()); ?></strong> <!-- Auteur du commentaire -->
+									<small>Le <?= $comment->getDatePost()->format('d/m/y à H:i:s'); ?></small> <!-- Date de publication formatée -->
 									<?php
-									if(empty($comment->getSignaler())) {
+									if(empty($comment->getSignaler())) { // Si l'attribut 'signaler' est vide, on affiche le lien pour signaler.
 									?>
 									<a href="index.php?p=single&amp;id=<?= $this->articleUnique->getId(); ?>&amp;action=signal&amp;commentId=<?= $comment->getId(); ?>"><small class="signal pull-right">Signaler</small></a>
 									<?php
+									// Sinon, on affiche un message d'alerte pour prévenir que le commentaire a été signalé.
 									} else {
 										echo '<small class="text-danger">Le commentaire a été signalé et est en attente de modération.</small>';
 									}
 									?>
 								</p>
 							</div>
+							<!-- Contenu du commentaire -->
 							<div class="comment-content">
 								<p><?= htmlspecialchars($comment->getContent()); ?></p>
 							</div>
@@ -89,6 +106,8 @@ class ViewSingle
 										?>
 									</p>
 								</div>
+
+								<!-- Contenu du commentaire -->
 								<div class="comment-content">
 									<p><?= htmlspecialchars($subComment->getContent()); ?></p>
 								</div>
@@ -113,7 +132,8 @@ class ViewSingle
 											?>
 										</p>
 									</div>
-
+									
+									<!-- Contenu du commentaire -->
 									<div class="comment-content">
 										<p><?= htmlspecialchars($subSubComment->getContent()); ?></p>
 									</div>

@@ -12,6 +12,7 @@ class AdminController extends Controller {
 		}
 
 		// AJOUT ET MISE À JOUR D'UN ARTICLE EN BASE DE DONNÉES //
+        $errors = '';
 		if(!empty($_POST['title']) AND !empty($_POST['author']) AND !empty($_POST['content'])) {
 			$title = $_POST['title'];
 			$author = $_POST['author'];
@@ -28,7 +29,19 @@ class AdminController extends Controller {
 				$article->setAuthor($author);
 				$this->articleManager->add($article);
 			}
-		}
+		} elseif(!empty($_POST)){
+		    if(empty($_POST['title'])) {
+                 $errors .= '<li>Le titre est obligatoire.</li>';
+            }
+            if(empty($_POST['author'])) {
+                 $errors .= '<li>L\'auteur est obligatoire.</li>';
+            }
+            if(empty($_POST['content'])) {
+                 $errors .= '<li>L\'article est obligatoire.</li>';
+            }
+
+            $_SESSION['flash']['error'] = '<ul>' . $errors . '</ul>';
+        }
 
 		// ÉDITION ET SUPPRESSION DES ARTICLES //
 		if(isset($_GET['action'])) {

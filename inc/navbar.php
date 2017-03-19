@@ -1,5 +1,5 @@
 <!-- Navigation -->
-<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
   <div class="container">
     <div class="navbar-header">
       <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
@@ -17,11 +17,16 @@
           <a href="index.php">Blog</a>
         </li>
         <li <?php if(isset($_GET['p']) AND $_GET['p'] == 'about') echo 'class="active"'; ?>><a href="index.php?p=about">À propos</a></li>
+        <?php if(isset($_SESSION['username']) AND $_SESSION['username'] == 'Jean') {
+        ?>
+        <li><a href="index.php?p=admin">Administration</a></li>
+        <?php
+        }
 
-        <?php if(!isset($_SESSION['username'])) { ?>
+        if(!isset($_SESSION['username'])) { ?>
         <li><a href="index.php?p=login">Connexion</a></li>
         <?php } else { ?>
-        <li><a href="../inc/logout.php">Déconnexion</a></li>
+        <li><a href="index.php?p=logout">Déconnexion</a></li>
         <?php } ?>
       </ul>
     </div>

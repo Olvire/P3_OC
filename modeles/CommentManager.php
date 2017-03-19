@@ -143,6 +143,33 @@ class CommentManager
 		$comment->setSubComments($listComments);
 	}
 
+	public function deleteAllWithArticle($articleId)
+    {
+        // 1st level
+        $comments = $this->getComments($articleId);
+        foreach($comments as $comment) {
+            $this->getCommentsChildren($comment);
+            
+            // 2nd level
+            $children = $comment->getSubComments();
+            if($children !== null ) {
+                foreach ($children as $child) {
+                    $this->getCommentsChildren($child);
+                    
+                    // 3rd level
+                    $thirdLevelComs = $child->getSubComments();
+                    if($thirdLevelComs !== null) {
+                        foreach ($thirdLevelComs as $com) {
+                            $this->deleteComment($com->getId());
+                        }
+                    }
+                    $this->deleteComment($child->getId());
+                }
+            }
+            $this->deleteComment($comment->getId());
+        }
+    }
+
 	/**
 	 * Signal a comment so it can be moderated in admin page
 	 * @param $comment  The comment

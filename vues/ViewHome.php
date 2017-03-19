@@ -26,7 +26,14 @@ class ViewHome
 		<div class="home-container">
 			
 			<!-- Image décorative en haut de la page. -->
-			<div class="home-pic-top"></div>
+			<?php
+			if($this->currentPage == 1) { ?>
+			<div class="home-pic-top">
+				<div class="container">
+					<h1 class="animated fadeInLeftBig"><em>&laquo; Billet simple pour l'Alaska &raquo; </em><br><small>Découvrez mon nouveau roman chapitre par chapitre</small></h1>
+				</div>
+			</div>
+			<?php } ?>
 			
 			<div class="container">
 				<div class="row">

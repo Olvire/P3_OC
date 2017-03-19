@@ -129,7 +129,9 @@ class ArticleManager
 	 */
 	public function deleteArticle()
 	{
-		$this->db->exec('DELETE FROM articles WHERE id = '. $_GET['id']);
+		$commentManager = new CommentManager($this->db);
+		$commentManager->deleteAllWithArticle($_POST['id']);
+		$this->db->exec('DELETE FROM articles WHERE id = '. $_POST['id']);
 	}
 
 	/**

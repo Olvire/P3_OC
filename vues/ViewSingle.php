@@ -150,7 +150,7 @@ class ViewSingle
 												<?php
 											}
 											?>
-											<textarea name="content" placeholder="Votre commentaire"></textarea>
+											<textarea name="content" placeholder="Votre commentaire" autofocus></textarea>
 											<input type="hidden" name="parentId" value="<?= $subComment->getId(); ?>">
 											<input type="submit" value="Envoyer" class="btn btn-default btn-xs" required />
 										</form>
@@ -171,7 +171,7 @@ class ViewSingle
 											<?php
 										}
 										?>
-										<textarea name="content" placeholder="Votre commentaire"></textarea>
+										<textarea name="content" placeholder="Votre commentaire" autofocus></textarea>
 										<input type="hidden" name="parentId" value="<?= $subComment->getId(); ?>">
 										<input type="submit" value="Envoyer" class="btn btn-default btn-xs" required />
 									</form>
@@ -195,7 +195,7 @@ class ViewSingle
 										<?php
 									}
 									?>
-									<textarea name="content" placeholder="Votre commentaire"></textarea>
+									<textarea name="content" placeholder="Votre commentaire" autofocus></textarea>
 									<input type="hidden" name="parentId" value="<?= $comment->getId(); ?>">
 									<input type="submit" value="Envoyer" class="btn btn-default btn-xs" required />
 								</form>

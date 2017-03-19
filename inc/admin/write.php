@@ -13,7 +13,9 @@ if(isset($_GET['action']) AND $_GET['action'] == 'edit' AND isset($_GET['id'])) 
 if(!isset($_GET['action'])) {
 	echo '<p>Vous pouvez rédiger un nouvel article. Il apparaîtra non seulement sur la page d\'accueil, mais aussi dans votre liste d\'articles.</p>';
 }
-
+if(isset($_SESSION['flash'])) {
+	include '../inc/flash-msg.php';
+}
 ?>
 <form action="" method="post">
 	<div class="form-group">

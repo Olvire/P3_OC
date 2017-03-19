@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <meta name="description" content="Site officiel de l'écrivain Jean Forteroche destiné à vous faire découvrir son nouveau roman en intégralité, gratuitement.">
+    <meta name="description" content="">
     <meta name="author" content="Jean Forteroche">
     <link rel="icon" href="../public/img/favicon.ico">
 
@@ -14,6 +14,7 @@
     <link rel="stylesheet" href="../public/css/bootstrap.min.css">
 	  <link rel="stylesheet" href="../public/css/font-awesome/css/font-awesome.min.css">
 	  <link rel="stylesheet" href="../public/css/style.css">
+    <link rel="stylesheet" href="../public/css/animate.css">
   </head>
 
   <body>
@@ -25,7 +26,10 @@
       echo $content;
       
       // Le footer du site.
-      include('../inc/footer.php'); 
+      
+      if(!isset($_GET['p']) OR (isset($_GET['p']) AND $_GET['p'] == 'home' OR $_GET['p'] == 'about' OR $_GET['p'] == 'mentions' OR $_GET['p'] == 'login' OR $_GET['p'] == 'single')) {
+        include('../inc/footer.php');
+      }
     ?>
     
     <!-- jQuery -->

@@ -31,7 +31,11 @@ if(empty($this->listOfArticles)) {
 			<div class="article-footer">
 				<a class="btn btn-primary " href="index.php?p=single&id=<?= $article->getId(); ?>">Consulter</a>
 				<a class="btn btn-default " href="index.php?p=admin&menu=write&action=edit&id=<?= $article->getId(); ?>">Éditer</a>
-				<a class="btn btn-default" href="index.php?p=admin&menu=list&action=delete&id=<?= $article->getId(); ?>"">Supprimer</a>
+                <form method="post" role="form" action="index.php?p=admin&menu=list&action=delete&id=<?= $article->getId(); ?>"
+                      style="display: inline;">
+                    <input type="hidden" name="id" value="<?= $article->getId(); ?>">
+                    <input type="submit" value="Supprimer" class="btn btn-danger">
+                </form>
 			</div>
 
 		</article>

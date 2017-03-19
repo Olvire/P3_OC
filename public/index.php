@@ -46,9 +46,13 @@ if($p === 'home') {
 		$controller->execute();
 	}
 } elseif($p === 'login') {
-	$pageTitle .= ' - Connexion';
-	$controller = new LoginController();
-	$controller->execute();
+	if(isset($_SESSION['username']) AND $_SESSION['username'] == 'Jean') {
+		header('Location: index.php');
+	} else {
+		$pageTitle .= ' - Connexion';
+		$controller = new LoginController();
+		$controller->execute();
+	}
 } elseif($p === 'about') {
 	$pageTitle .= ' - À propos';
 	$controller = new AboutController();
@@ -57,6 +61,11 @@ if($p === 'home') {
 	$pageTitle .= ' - Mentions légales';
 	$controller = new MentionsController();
 	$controller->execute();
+} elseif($p === 'logout') {
+	session_start();
+	session_destroy();
+	header('Location: index.php');
+	exit();
 } else {
 	$controller = new ErrorController();
 	$controller->execute();
